@@ -85,4 +85,5 @@ still import existing data if you have it).
 
 ##  Per-repository testing
 
-1. [NPM](npm/README.md)
+1. [Files](files/README.md)
+2. [NPM](npm/README.md)

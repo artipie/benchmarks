@@ -26,7 +26,7 @@ It has several properties thar allows to configure it for particular environment
 
 * `repository.schema` - defines URL schema of NPM repository, `https` by default; 
 * `repository.host` - defines hostname of NPM repository, `registry.npmjs.org` by default; 
-* `repository.port` - defines porn of NPM repository, `443` by default;
+* `repository.port` - defines port of NPM repository, `443` by default;
 * `repository.path` - context path of NPM repository, `<empty>` by default. It used for 
 repository managers that routes requests to concrete repository based on URL paths;
 * `users` - simultaneous users, 10 by default;

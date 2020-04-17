@@ -11,6 +11,15 @@ resource "aws_security_group" "allow_ssh_sg" {
     protocol = "tcp"
   }
 
+  ingress {
+    cidr_blocks = [
+      aws_subnet.perf_subnet.cidr_block
+    ]
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+  }
+
   egress {
     from_port = 0
     to_port = 0

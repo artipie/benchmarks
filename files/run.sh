@@ -33,10 +33,10 @@ scenario=$1
 
 if [ "$2" != 'artipie' ] && [ "$2" != 'sonatype' ]
 then
-  echo >&2 "Unknown mode '$2': only 'artipie' and 'sonatype' are supported"
+  echo >&2 "Unknown repository '$2': only 'artipie' and 'sonatype' are supported"
   exit 1
 fi
-mode=$2
+repository=$2
 
 if [ $# -gt 2 ]
 then
@@ -48,4 +48,7 @@ fi
 check_prerequisites
 generate_keys
 terraform init -input=false tf
-terraform apply -input=false -auto-approve tf
+terraform apply -input=false -auto-approve \
+  -var "repository={type=\"${repository}\", version=\"${version}\"}" \
+  -var "scenario_file=${scenario}" \
+  tf

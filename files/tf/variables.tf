@@ -7,6 +7,7 @@ variable "secret_key" {
 }
 
 variable "region" {
+  description = "Region to create AWS instances"
   default = "eu-central-1"
 }
 
@@ -29,7 +30,7 @@ variable "scenario_file" {
   description = "JMeter scenario file to run"
 }
 
-variable "run_repository_cmds" {
-  type = list(string)
-  description = "Command line to start and init repository (usually as docker container)"
+variable "repository" {
+  description = "Repository to create (artipie | sonatype)"
+  type = object({type = string, version = string})
 }

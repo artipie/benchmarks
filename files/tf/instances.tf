@@ -92,7 +92,6 @@ resource "aws_instance" "sonatype" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
-      "sudo apt-get upgrade -y",
       "sudo apt-get install -y apt-transport-https gnupg-agent",
       "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -",
       "sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\"",
@@ -134,8 +133,7 @@ resource "aws_instance" "jmeter" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
-      "sudo apt-get upgrade -y",
-      "sudo apt-get install -y openjdk-11-jdk-headless",
+      "sudo apt-get install -y openjdk-11-jre-headless",
       "curl -O https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.2.1.tgz",
       "tar xzf apache-jmeter-5.2.1.tgz"
     ]

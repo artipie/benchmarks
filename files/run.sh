@@ -52,3 +52,9 @@ terraform apply -input=false -auto-approve \
   -var "repository={type=\"${repository}\", version=\"${version}\"}" \
   -var "scenario_file=${scenario}" \
   tf
+
+echo "To destroy the AWS stack run:"
+echo terraform destroy -input=false -auto-approve \
+  -var "\"repository={type=\\\"${repository}\\\", version=\\\"${version}\\\"}\"" \
+  -var "\"scenario_file=${scenario}\"" \
+  tf

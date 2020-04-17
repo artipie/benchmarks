@@ -1,5 +1,46 @@
 # Benchmarks for Files Artipie repositories.
 
+## How to run tests
+
+Tests can be run in two ways:
+1. **Manual management infrastructure**. In this case the user is fully responsible
+to create environment for the tests. After environment is created and initially setup,
+user can run test scenarios with JMeter and get results;
+2. **AWS on-demand infrastructure**. There is a way to deploy all infrastructure 
+automatically in AWS, run tests and destroy the infrastructure. `run.sh` script handles
+full life-cycle for the task. It creates infrastructure with Terraform, runs the test,
+downloads the results and destroy infrastructure.
+
+### AWS on-demand infrastructure 
+
+To use `run.sh` you need:
+1. Setup AWS credentials. There are two ways:
+   * Create `terraform.tfvars` file with the following content:
+   ```hcl-terraform
+    access_key = "<AWS_ACCESS_KEY>"
+    secret_key = "<AWS_SECRET_KEY>"
+   ```
+   * Set environment variables:
+   ```
+   TF_VAR_access_key=<AWS_ACCESS_KEY>
+   TF_VAR_secret_key=<AWS_SECRET_KEY>
+   ```
+   There are number of parameters for terraform you can see in `tf/variables.tf` file
+   you may want to override. You can do it with the same ways (file, env).
+2. Execute `run.sh`:
+   ```shell script
+   $ ./run.sh <scenario.jmx> (artipie|sonatype) [<version>]
+   ```
+   where 
+   - **<scenario.jmx>** - JMeter scenario to be executed;
+   - **(artipie|sonatype)** - repository to be tested. Only artipie and 
+     sonatype are supported;
+   - **<version>** - version of repository. It corresponds to docker tag
+     for the repository image. It's optional param, *latest* by default.
+     
+     *Keep in mind that artipie is not published with latest tag now (actual
+     for 0.1.2) version*.
+   
 ## Hosted repository 
 
 It provides the base functionality for working with files. It supports PUT operation to

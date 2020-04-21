@@ -34,3 +34,9 @@ variable "repository" {
   description = "Repository to create (artipie | sonatype)"
   type = object({type = string, version = string})
 }
+
+variable "repository_credentials" {
+  description = "Repository credentials"
+  type = object({username = string, password = string})
+  default = { username = "user", password = "password" }
+}

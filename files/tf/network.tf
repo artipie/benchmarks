@@ -3,7 +3,8 @@ resource "aws_vpc" "perf_net" {
   enable_dns_hostnames = true
   enable_dns_support = true
   tags = {
-    Name = "perf-net"
+    Name = "perf-net",
+    Project = "Artipie Performance"
   }
 }
 
@@ -16,7 +17,8 @@ resource "aws_subnet" "perf_subnet" {
 resource "aws_internet_gateway" "perf_gw" {
   vpc_id = aws_vpc.perf_net.id
   tags = {
-    Name = "perf-gw"
+    Name = "perf-gw",
+    Project = "Artipie Performance"
   }
 }
 
@@ -27,7 +29,8 @@ resource "aws_route_table" "perf_routes" {
     gateway_id = aws_internet_gateway.perf_gw.id
   }
   tags = {
-    Name = "perf_routes"
+    Name = "perf_routes",
+    Project = "Artipie Performance"
   }
 }
 

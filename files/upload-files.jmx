@@ -15,12 +15,12 @@
           </elementProp>
           <elementProp name="users.small" elementType="Argument">
             <stringProp name="Argument.name">users.small</stringProp>
-            <stringProp name="Argument.value">${__P(users.small,1)}</stringProp>
+            <stringProp name="Argument.value">${__P(users.small,5)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="users.medium" elementType="Argument">
             <stringProp name="Argument.name">users.medium</stringProp>
-            <stringProp name="Argument.value">${__P(users.medium,1)}</stringProp>
+            <stringProp name="Argument.value">${__P(users.medium,2)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="users.large" elementType="Argument">

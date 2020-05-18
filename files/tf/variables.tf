@@ -23,7 +23,7 @@ variable "instance_type" {
 
 variable "repo_storage_size" {
   description = "Storage size for repository (in GB)"
-  default = "20"
+  default = "50"
 }
 
 variable "scenario_file" {

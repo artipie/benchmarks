@@ -39,8 +39,14 @@ resource "aws_instance" "artipie" {
     private_key = file("id_rsa_perf")
   }
 
+  provisioner "file" {
+    source = "wait-instance-init.sh"
+    destination = "/home/ubuntu/wait-instance-init.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
+      "sh ./wait-instance-init.sh",
       "sudo apt-get update",
       "sudo apt-get upgrade -y",
       "sudo apt-get install -y apt-transport-https gnupg-agent",
@@ -73,8 +79,7 @@ resource "aws_instance" "sonatype" {
   ami = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
   key_name = aws_key_pair.perf_key_pair.key_name
-  security_groups = [
-    aws_security_group.allow_ssh_sg.id]
+  security_groups = [aws_security_group.allow_ssh_sg.id]
   subnet_id = aws_subnet.perf_subnet.id
   associate_public_ip_address = true
 
@@ -93,8 +98,14 @@ resource "aws_instance" "sonatype" {
     private_key = file("id_rsa_perf")
   }
 
+  provisioner "file" {
+    source = "wait-instance-init.sh"
+    destination = "/home/ubuntu/wait-instance-init.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
+      "sh ./wait-instance-init.sh",
       "sudo apt-get update",
       "sudo apt-get install -y apt-transport-https gnupg-agent",
       "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -",
@@ -156,8 +167,14 @@ resource "aws_instance" "jmeter" {
     destination = "/home/ubuntu/${var.scenario_file}"
   }
 
+  provisioner "file" {
+    source = "wait-instance-init.sh"
+    destination = "/home/ubuntu/wait-instance-init.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
+      "sh ./wait-instance-init.sh",
       "sudo apt-get update",
       "sudo apt-get install -y openjdk-11-jre-headless",
       "curl -O https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.2.1.tgz",

@@ -53,8 +53,21 @@ terraform apply -input=false -auto-approve \
   -var "scenario_file=${scenario}" \
   tf
 
-echo "To destroy the AWS stack run:"
-echo terraform destroy -input=false -auto-approve \
-  -var "\"repository={type=\\\"${repository}\\\", version=\\\"${version}\\\"}\"" \
-  -var "\"scenario_file=${scenario}\"" \
+jmeter_ip_addr=$(terraform output jmeter_ip_addr)
+server_ip_addr=$(terraform output server_ip_addr)
+
+if [ "${repository}" == "artipie" ]
+then
+  remote_cmd="./apache-jmeter-5.2.1/bin/jmeter -n -t upload-files.jmx -l results.jtl -e -o report -Jrepository.host=${server_ip_addr} -Jrepository.path=files"
+elif [ "${repository}" == "sonatype" ]
+then
+  remote_cmd="./apache-jmeter-5.2.1/bin/jmeter -n -t upload-files.jmx -l results.jtl -e -o report -Jrepository.host=${server_ip_addr} -Jrepository.path='/repository' -Jrepository.path=files -Jlogin=user -Jpassword=password"
+fi
+
+ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -i id_rsa_perf ubuntu@${jmeter_ip_addr} "${remote_cmd}"
+scp -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -i id_rsa_perf -r ubuntu@${jmeter_ip_addr}:report .
+
+terraform destroy -input=false -auto-approve \
+  -var "repository={type=\"${repository}\", version=\"${version}\"}" \
+  -var "scenario_file=${scenario}" \
   tf

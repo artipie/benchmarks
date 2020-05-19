@@ -29,7 +29,8 @@ resource "aws_instance" "artipie" {
   }
 
   tags = {
-    Name = "repository"
+    Name = "repository",
+    Project = "Artipie Performance"
   }
 
   connection {
@@ -82,7 +83,8 @@ resource "aws_instance" "sonatype" {
   }
 
   tags = {
-    Name = "repository"
+    Name = "repository",
+    Project = "Artipie Performance"
   }
 
   connection {
@@ -139,7 +141,8 @@ resource "aws_instance" "jmeter" {
   associate_public_ip_address = true
 
   tags = {
-    Name = "jmeter"
+    Name = "jmeter",
+    Project = "Artipie Performance"
   }
 
   connection {

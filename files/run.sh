@@ -24,6 +24,7 @@ then
   exit 1
 fi
 
+cd "$(dirname "$0")"
 if [ ! -f "$1" ]
 then
   echo >&2 "Could not find file $1"
@@ -58,10 +59,10 @@ server_ip_addr=$(terraform output server_ip_addr)
 
 if [ "${repository}" == "artipie" ]
 then
-  remote_cmd="./apache-jmeter-5.2.1/bin/jmeter -n -t upload-files.jmx -l results.jtl -e -o report -Jrepository.host=${server_ip_addr} -Jrepository.path=files"
+  remote_cmd="./apache-jmeter-5.2.1/bin/jmeter -n -t upload-files.jmx -l results.jtl -e -o report -Jrepository.host=${server_ip_addr} -Jrepository.path=files -Jlogin=user -Jpassword=password"
 elif [ "${repository}" == "sonatype" ]
 then
-  remote_cmd="./apache-jmeter-5.2.1/bin/jmeter -n -t upload-files.jmx -l results.jtl -e -o report -Jrepository.host=${server_ip_addr} -Jrepository.path='/repository' -Jrepository.path=files -Jlogin=user -Jpassword=password"
+  remote_cmd="./apache-jmeter-5.2.1/bin/jmeter -n -t upload-files.jmx -l results.jtl -e -o report -Jrepository.host=${server_ip_addr} -Jrepository.path='repository/files' -Jlogin=user -Jpassword=password"
 fi
 
 ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -i id_rsa_perf ubuntu@${jmeter_ip_addr} "${remote_cmd}"

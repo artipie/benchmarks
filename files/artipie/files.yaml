@@ -3,3 +3,7 @@ repo:
   storage:
     type: fs
     path: /var/artipie/files
+  permissions:
+    user:
+      - download
+      - upload

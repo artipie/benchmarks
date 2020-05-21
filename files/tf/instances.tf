@@ -67,7 +67,7 @@ resource "aws_instance" "artipie" {
     inline = [
       "mkdir -p artipie/repo",
       "cp upload/artipie/*.yaml artipie/repo",
-      "sudo docker run -d -v /home/ubuntu/artipie:/var/artipie -p 80:80 --name artipie artipie/artipie:${var.repository.version}",
+      "sudo docker run -d -e ARTIPIE_USER_NAME=${var.repository_credentials.username} -e ARTIPIE_USER_PASS=${var.repository_credentials.password} -v /home/ubuntu/artipie:/var/artipie -p 80:80 --name artipie artipie/artipie:${var.repository.version}",
       "rm -fr upload"
     ]
   }

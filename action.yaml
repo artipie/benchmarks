@@ -1,0 +1,32 @@
+name: 'run-benchmarks'
+description: 'Run Artipie Benchmarks Github action'
+branding:
+  icon: trending-up
+  color: green
+inputs:
+  aws-access-key:
+    description: 'AWS access key to create perfomance tests environment'
+    required: true
+  aws-secret-key:
+    description: 'AWS secret key to create perfomance tests environment'
+    required: true
+  adapter:
+    description: 'Artipie adapter to test'
+    required: true
+  scenario:
+    description: 'JMeter scenario file to execute'
+    required: true
+  version:
+    description: 'Docker tag of Artipie image to test'
+    required: true
+runs:
+  using: 'docker'
+  image: Dockerfile
+  env:
+    TF_VAR_access_key: ${{ inputs.aws-access-key }}
+    TF_VAR_secret_key: ${{ inputs.aws-secret-key }}
+  args:
+    - ${{ inputs.adapter }}
+    - ${{ inputs.scenario }}
+    - artipie
+    - ${{ inputs.version }}

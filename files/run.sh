@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Run performance tests.
 #
 # Usage: ./run.sh <jmeter-scenario.jmx> artipie|sonatype [<version>]

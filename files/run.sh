@@ -65,7 +65,7 @@ then
   remote_cmd="./apache-jmeter-5.2.1/bin/jmeter -n -t upload-files.jmx -l results.jtl -e -o report -Jrepository.host=${server_ip_addr} -Jrepository.path='repository/files' -Jlogin=user -Jpassword=password"
 fi
 
-ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -i id_rsa_perf ubuntu@${jmeter_ip_addr} "${remote_cmd}"
+timeout 330 ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -i id_rsa_perf ubuntu@${jmeter_ip_addr} "${remote_cmd}"
 scp -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -i id_rsa_perf -r ubuntu@${jmeter_ip_addr}:report .
 
 terraform destroy -input=false -auto-approve \

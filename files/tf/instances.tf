@@ -65,9 +65,22 @@ resource "aws_instance" "artipie" {
 
   provisioner "remote-exec" {
     inline = [
-      "mkdir -p artipie/repo",
-      "cp upload/artipie/*.yaml artipie/repo",
-      "sudo docker run -d -e ARTIPIE_USER_NAME=${var.repository_credentials.username} -e ARTIPIE_USER_PASS=${var.repository_credentials.password} -v /home/ubuntu/artipie:/var/artipie -p 80:80 --name artipie artipie/artipie:${var.repository.version}",
+      "mkdir -p artipie/repo/account",
+      "cp upload/artipie/*.yaml artipie/repo/account"
+    ]
+  }
+
+  provisioner "file" {
+    content = templatefile("templates/artipie-credentials.tpl", {
+      username = var.repository_credentials.username,
+      password = var.repository_credentials.password
+    })
+    destination = "/home/ubuntu/artipie/repo/_credentials.yml"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo docker run -d -v /home/ubuntu/artipie:/var/artipie -p 80:80 --name artipie artipie/artipie:${var.repository.version}",
       "rm -fr upload"
     ]
   }
@@ -124,7 +137,7 @@ resource "aws_instance" "sonatype" {
   }
 
   provisioner "file" {
-    content = templatefile("templates/credentials.tpl", {
+    content = templatefile("templates/sonatype-credentials.tpl", {
       username = var.repository_credentials.username,
       password = var.repository_credentials.password
     })

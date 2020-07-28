@@ -10,23 +10,16 @@ inputs:
   aws-secret-key:
     description: 'AWS secret key to create perfomance tests environment'
     required: true
-  adapter:
-    description: 'Artipie adapter to test'
-    required: true
-  scenario:
-    description: 'JMeter scenario file to execute'
-    required: true
   version:
     description: 'Docker tag of Artipie image to test'
     required: true
+outputs:
+  report:
+    description: 'Report containing JSON file with benchmarking results'
 runs:
   using: 'docker'
   image: Dockerfile
   env:
+    ARTIPIE_VERSION: ${{ inputs.version }}
     TF_VAR_access_key: ${{ inputs.aws-access-key }}
     TF_VAR_secret_key: ${{ inputs.aws-secret-key }}
-  args:
-    - ${{ inputs.adapter }}
-    - ${{ inputs.scenario }}
-    - artipie
-    - ${{ inputs.version }}

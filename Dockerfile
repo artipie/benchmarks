@@ -1,6 +1,3 @@
 FROM hashicorp/terraform
-
-COPY files /benchmarks/files
-COPY entry-point.sh /benchmarks/
-
+COPY . ./benchmarks
 ENTRYPOINT ["/benchmarks/entry-point.sh"]

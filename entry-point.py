@@ -33,7 +33,7 @@ for directory in directories:
     file = open("benchmark-results.json", "r")
     dict_merge(json.loads(file.read()), result)
     file.close()
-    os.chdir("..")
+    os.chdir("-")
 
 # Write result into a file
 json_str = json.dumps(result)

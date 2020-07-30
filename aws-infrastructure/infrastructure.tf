@@ -18,8 +18,72 @@ provider "aws" {
 }
 
 resource "aws_key_pair" "aws_ssh_key" {
-  key_name   = "aws_ssh_key"
+  key_name = "aws_ssh_key"
   public_key = file("aws_ssh_key.pub")
+}
+
+
+# Dedicated network
+
+resource "aws_vpc" "perf_net" {
+  cidr_block = "192.168.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support = true
+  tags = {
+    Name = "perf-net",
+    Project = "Artipie Performance"
+  }
+}
+
+resource "aws_subnet" "perf_subnet" {
+  cidr_block = cidrsubnet(aws_vpc.perf_net.cidr_block, 12, 1234)
+  vpc_id = aws_vpc.perf_net.id
+  availability_zone = "eu-central-1b"
+}
+
+resource "aws_internet_gateway" "perf_gw" {
+  vpc_id = aws_vpc.perf_net.id
+  tags = {
+    Name = "perf-gw",
+    Project = "Artipie Performance"
+  }
+}
+
+resource "aws_route_table" "perf_routes" {
+  vpc_id = aws_vpc.perf_net.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.perf_gw.id
+  }
+  tags = {
+    Name = "perf_routes",
+    Project = "Artipie Performance"
+  }
+}
+
+resource "aws_route_table_association" "perf_subnet_association" {
+  subnet_id = aws_subnet.perf_subnet.id
+  route_table_id = aws_route_table.perf_routes.id
+}
+
+
+# Allow traffic 
+
+resource "aws_security_group" "allow_ssh_sg" {
+  name = "allow-all"
+  vpc_id = aws_vpc.perf_net.id
+  ingress {
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+  }
+  egress {
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+  }
 }
 
 data "aws_ami" "ubuntu" {
@@ -46,6 +110,14 @@ resource "aws_instance" "client" {
   instance_type = "t2.medium"
   key_name = aws_key_pair.aws_ssh_key.key_name
   associate_public_ip_address = true
+  security_groups = [aws_security_group.allow_ssh_sg.id]
+  subnet_id = aws_subnet.perf_subnet.id
+
+  connection {
+    user = "ubuntu"
+    host = self.public_ip
+    private_key = file("aws_ssh_key")
+  }
 }
 
 resource "aws_instance" "server" {
@@ -53,6 +125,14 @@ resource "aws_instance" "server" {
   instance_type = "t2.medium"
   key_name = aws_key_pair.aws_ssh_key.key_name
   associate_public_ip_address = true
+  security_groups = [aws_security_group.allow_ssh_sg.id]
+  subnet_id = aws_subnet.perf_subnet.id
+
+  connection {
+    user = "ubuntu"
+    host = self.public_ip
+    private_key = file("aws_ssh_key")
+  }
 }
 
 

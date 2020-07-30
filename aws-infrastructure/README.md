@@ -11,16 +11,16 @@ $ ./start.sh
 The following env variables are exported during the script run:
 
 ```bash
-echo "$private_client_ip_addr"
-echo "$private_server_ip_addr"
-echo "$public_client_ip_addr"
-echo "$public_server_ip_addr"
+echo "$PRIVATE_CLIENT_IP_ADDR"
+echo "$PRIVATE_SERVER_IP_ADDR"
+echo "$PUBLIC_CLIENT_IP_ADDR"
+echo "$PUBLIC_SERVER_IP_ADDR"
 ```
 
 Connect to client instance with ssh:
 
 ```bash
-$ ssh -i aws_ssh_key ubuntu@$public_client_ip_addr
+$ ssh -i aws_ssh_key ubuntu@$PUBLIC_CLIENT_IP_ADDR
 ```
 
 In order to stop use `stop.sh`:

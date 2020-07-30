@@ -1,6 +1,9 @@
 #!/bin/bash
 set -x
 
+# Enter aws-infrastructure dir, whaterver the script is called from
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+
 # Generate RSA key for ssh access if not exists
 if [ ! -f "aws_ssh_key" ]
 then

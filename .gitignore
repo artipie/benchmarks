@@ -142,3 +142,4 @@ aws-infrastructure/terraform.tfstate
 aws-infrastructure/terraform.tfstate.backup
 aws-infrastructure/aws_ssh_key
 aws-infrastructure/aws_ssh_key.pub
+aws-infrastructure/.terraform.tfstate.lock.info

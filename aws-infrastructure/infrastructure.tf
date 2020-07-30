@@ -114,6 +114,7 @@ resource "aws_instance" "client" {
   subnet_id = aws_subnet.perf_subnet.id
 
   connection {
+    type = "ssh"
     user = "ubuntu"
     host = self.public_ip
     private_key = file("aws_ssh_key")
@@ -129,6 +130,7 @@ resource "aws_instance" "server" {
   subnet_id = aws_subnet.perf_subnet.id
 
   connection {
+    type = "ssh"
     user = "ubuntu"
     host = self.public_ip
     private_key = file("aws_ssh_key")

@@ -3,6 +3,11 @@
 
 # Security and variables
 
+variable "instance-type" {
+  description = "AWS instance type"
+  default = "t2.medium"
+}
+
 variable "region" {
   description = "AWS region"
   default = "eu-central-1"
@@ -117,7 +122,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "client" {
   ami = data.aws_ami.ubuntu.id
-  instance_type = "t2.medium"
+  instance_type = var.instance-type
   key_name = aws_key_pair.aws_ssh_key.key_name
   associate_public_ip_address = true
   security_groups = [aws_security_group.allow_ssh_sg.id]
@@ -133,7 +138,7 @@ resource "aws_instance" "client" {
 
 resource "aws_instance" "server" {
   ami = data.aws_ami.ubuntu.id
-  instance_type = "t2.medium"
+  instance_type = var.instance-type
   key_name = aws_key_pair.aws_ssh_key.key_name
   associate_public_ip_address = true
   security_groups = [aws_security_group.allow_ssh_sg.id]

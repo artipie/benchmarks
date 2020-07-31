@@ -1,0 +1,9 @@
+.idea/benchmarks.iml
+.idea/
+files/report/
+terraform.tfstate.backup
+terraform.tfstate
+aws-infrastructure/.terraform/
+aws-infrastructure/aws_ssh_key
+aws-infrastructure/aws_ssh_key.pub
+aws-infrastructure/.terraform.tfstate.lock.info

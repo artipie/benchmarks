@@ -3,6 +3,16 @@
 
 # Security and variables
 
+variable "region" {
+  description = "AWS region"
+  default = "eu-central-1"
+}
+
+variable "zone" {
+  description = "AWS zone"
+  default = "eu-central-1b"
+}
+
 variable "access_key" {
   description = "AWS Access Key"
 }
@@ -14,7 +24,7 @@ variable "secret_key" {
 provider "aws" {
   access_key = var.access_key
   secret_key = var.secret_key
-  region  = "eu-central-1"
+  region  = var.region
 }
 
 resource "aws_key_pair" "aws_ssh_key" {
@@ -38,7 +48,7 @@ resource "aws_vpc" "perf_net" {
 resource "aws_subnet" "perf_subnet" {
   cidr_block = cidrsubnet(aws_vpc.perf_net.cidr_block, 12, 1234)
   vpc_id = aws_vpc.perf_net.id
-  availability_zone = "eu-central-1b"
+  availability_zone = var.zone
 }
 
 resource "aws_internet_gateway" "perf_gw" {

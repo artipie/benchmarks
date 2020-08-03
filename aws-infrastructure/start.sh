@@ -30,6 +30,7 @@ ssh -i aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$IP <<'ENDSSH'
 set -x
 sudo apt-get update
 sudo apt-get install -y \
+    python3 \
     apt-transport-https \
     ca-certificates \
     curl \

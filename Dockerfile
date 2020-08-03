@@ -1,6 +1,5 @@
 FROM hashicorp/terraform
-
-COPY files /benchmarks/files
-COPY entry-point.sh /benchmarks/
-
-ENTRYPOINT ["/benchmarks/entry-point.sh"]
+RUN apk add --no-cache python3 bash
+COPY . ./benchmarks
+WORKDIR /benchmarks
+ENTRYPOINT ["/benchmarks/entry-point.py"]

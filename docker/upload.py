@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 import subprocess
+import sys
 import os
 import time
 import json
 
+images = ["ubuntu", "graphiteapp/graphite-statsd", "g4s8/artipie-base"]
 
 # Start artipie with preconfigured docker repo
 def start_artipie():
@@ -92,19 +94,33 @@ def perform_benchmarks(images):
 
 
 # Pull images form docker hub and tag them for subsequent pushes
-def pull_and_tag(images):
+def pull_and_tag(images, host = "localhost"):
     for image in images:
         subprocess.run(["docker", "pull", image])
-        subprocess.run(["docker", "tag", image, f"localhost:5000/{image}"])
-        subprocess.run(["docker", "tag", image, f"localhost:8080/my-docker/{image}"])
-
+        subprocess.run(["docker", "tag", image, f"{host}:5000/{image}"])
+        subprocess.run(["docker", "tag", image, f"{host}:8080/my-docker/{image}"])
 
 # Entry point
 if __name__ == '__main__':
-    images = ["ubuntu", "graphiteapp/graphite-statsd", "g4s8/artipie-base"]
-    pull_and_tag(images)
-    start_registry()
-    start_artipie()
-    perform_benchmarks(images)
-    subprocess.run(["docker", "stop", "registry"])
-    subprocess.run(["docker", "stop", "artipie"])
+    arguments = len(sys.argv) - 1
+    # Run benchmark locally
+    if arguments == 0:
+        pull_and_tag(images)
+        start_registry()
+        start_artipie()
+        perform_benchmarks(images)
+        subprocess.run(["docker", "stop", "registry"])
+        subprocess.run(["docker", "stop", "artipie"])
+    # Run only pulling and tagging
+    elif sys.argv[1] == "pull":
+        pull_and_tag(images, host = os.getenv("PUBLIC_SERVER_IP_ADDR", "localhost"))
+    # Start only registry
+    elif sys.argv[1] == "start_registry":
+        start_registry()
+    elif sys.argv[1] == "start_artipie":
+        start_artipie()
+    elif sys.argv[1] == "stop_registry":
+        subprocess.run(["docker", "stop", "registry"])
+    elif sys.argv[1] == "stop_artipie":
+        subprocess.run(["docker", "stop", "artipie"])
+

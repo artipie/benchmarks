@@ -28,6 +28,7 @@ for IP in $PUBLIC_SERVER_IP_ADDR $PUBLIC_CLIENT_IP_ADDR
 do
 ssh -i aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$IP <<'ENDSSH'
 set -x
+set -e
 sudo apt-get update
 sudo apt-get install -y \
     python3 \

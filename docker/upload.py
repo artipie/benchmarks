@@ -8,6 +8,8 @@ import json
 images = ["ubuntu", "graphiteapp/graphite-statsd", "g4s8/artipie-base"]
 
 # Start artipie with preconfigured docker repo
+
+
 def start_artipie():
     print("Starting artipie")
     artipie_yml = """
@@ -28,12 +30,10 @@ repo:
       - "*"
 """
     os.makedirs("./configs", exist_ok=True)
-    f = open("./artipie.yaml", "w+")
-    f.write(artipie_yml)
-    f.close()
-    f = open("./configs/my-docker.yaml", "w+")
-    f.write(my_docker)
-    f.close()
+    with open("./artipie.yaml", "w+") as f:
+        f.write(artipie_yml)
+    with open("./configs/my-docker.yaml", "w+") as f:
+        f.write(my_docker)
     subprocess.run([
         "bash", "-c",
         "docker run -d --rm --name artipie -it -v $(pwd)/artipie.yaml:/etc/artipie.yml -v $(pwd):/var/artipie -p 8080:80 artipie/artipie:latest"
@@ -75,7 +75,7 @@ def perform_benchmarks(images):
                     }
                 }
             }
-        }
+         }
     single = result["docker"]["single-upload"]
     for image in images:
         registry_push = ["docker", "push", f"localhost:5000/{image}"]
@@ -88,17 +88,19 @@ def perform_benchmarks(images):
         print(f"Command: {cmd}\'n Elapsed: {artipie_time}")
         single["artipie"]["images"].append({image: artipie_time})
         single["docker-registry"]["images"].append({image: registry_time})
-    f = open("docker.json", "w+")
-    f.write(json.dumps(result, indent=4, sort_keys=True))
-    f.close()
-
+    with open("benchmark-results.json", "w+") as f:
+        f.write(json.dumps(result, indent=4, sort_keys=True))
 
 # Pull images form docker hub and tag them for subsequent pushes
-def pull_and_tag(images, host = "localhost"):
+
+
+def pull_and_tag(images, host="localhost"):
     for image in images:
         subprocess.run(["docker", "pull", image])
         subprocess.run(["docker", "tag", image, f"{host}:5000/{image}"])
-        subprocess.run(["docker", "tag", image, f"{host}:8080/my-docker/{image}"])
+        subprocess.run(
+            ["docker", "tag", image, f"{host}:8080/my-docker/{image}"])
+
 
 # Entry point
 if __name__ == '__main__':
@@ -113,7 +115,8 @@ if __name__ == '__main__':
         subprocess.run(["docker", "stop", "artipie"])
     # Run only pulling and tagging
     elif sys.argv[1] == "pull":
-        pull_and_tag(images, host = os.getenv("PUBLIC_SERVER_IP_ADDR", "localhost"))
+        pull_and_tag(images, host=os.getenv(
+            "PUBLIC_SERVER_IP_ADDR", "localhost"))
     # Start only registry
     elif sys.argv[1] == "start_registry":
         start_registry()
@@ -123,4 +126,3 @@ if __name__ == '__main__':
         subprocess.run(["docker", "stop", "registry"])
     elif sys.argv[1] == "stop_artipie":
         subprocess.run(["docker", "stop", "artipie"])
-

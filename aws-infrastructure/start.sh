@@ -17,6 +17,15 @@ terraform apply -input=false -auto-approve
 # Setup env variables with VMm's ip
 source set-env.sh
 
+# Prepare env file for aws instances
+cat <<EOT >> instance-env.sh
+export PRIVATE_CLIENT_IP_ADDR=$PRIVATE_CLIENT_IP_ADDR
+export PRIVATE_SERVER_IP_ADDR=$PRIVATE_SERVER_IP_ADDR
+export PUBLIC_CLIENT_IP_ADDR=$PUBLIC_CLIENT_IP_ADDR
+export PUBLIC_SERVER_IP_ADDR=$PUBLIC_SERVER_IP_ADDR
+EOT
+chmod +x instance-env.sh
+
 # Wait for VMs to start
 for IP in $PUBLIC_SERVER_IP_ADDR $PUBLIC_CLIENT_IP_ADDR
 do
@@ -26,9 +35,11 @@ done
 # Install required software on each VM
 for IP in $PUBLIC_SERVER_IP_ADDR $PUBLIC_CLIENT_IP_ADDR
 do
+scp -i aws_ssh_key -oStrictHostKeyChecking=no ./instance-env.sh ubuntu@$PUBLIC_CLIENT_IP_ADDR:/home/ubuntu
 ssh -i aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$IP <<'ENDSSH'
 set -x
 set -e
+echo "source /home/ubuntu/instance-env.sh" >> /home/ubuntu/.bashrc
 sudo apt-get update
 sudo apt-get install -y \
     python3 \

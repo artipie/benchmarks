@@ -15,17 +15,17 @@ scp -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ./upload.py 
 scp -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ./upload.py ubuntu@$PUBLIC_SERVER_IP_ADDR:/home/ubuntu/upload.py
 
 # Pull images and tag them on client VM
-ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_CLIENT_IP_ADDR /home/ubuntu/upload.py pull
+ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_CLIENT_IP_ADDR bash -c "/home/ubuntu/upload.py pull"
 
 # Benchmark artipie
-ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_SERVER_IP_ADDR /home/ubuntu/upload.py start_artipie
-ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_CLIENT_IP_ADDR /home/ubuntu/upload.py benchmark_artipie
-ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_SERVER_IP_ADDR /home/ubuntu/upload.py stop_artipie
+ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_SERVER_IP_ADDR bash -c "/home/ubuntu/upload.py start_artipie"
+ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_CLIENT_IP_ADDR bash -c "/home/ubuntu/upload.py benchmark_artipie"
+ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_SERVER_IP_ADDR bash -c "/home/ubuntu/upload.py stop_artipie"
 
 # Benchmark registry
-ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_SERVER_IP_ADDR /home/ubuntu/upload.py start_registry
-ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_CLIENT_IP_ADDR /home/ubuntu/upload.py benchmark_registry
-ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_SERVER_IP_ADDR /home/ubuntu/upload.py stop_registry
+ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_SERVER_IP_ADDR bash -c "/home/ubuntu/upload.py start_registry"
+ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_CLIENT_IP_ADDR bash -c "/home/ubuntu/upload.py benchmark_registry"
+ssh -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_SERVER_IP_ADDR bash -c "/home/ubuntu/upload.py stop_registry"
 
 # Download results
 scp -i ../aws-infrastructure/aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$PUBLIC_SERVER_IP_ADDR:/home/ubuntu/*.json ./

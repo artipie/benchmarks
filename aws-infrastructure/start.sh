@@ -18,6 +18,7 @@ terraform apply -input=false -auto-approve
 source set-env.sh
 
 # Prepare env file for aws instances
+rm -f instance-env.sh
 cat <<EOT >> instance-env.sh
 export PRIVATE_CLIENT_IP_ADDR=$PRIVATE_CLIENT_IP_ADDR
 export PRIVATE_SERVER_IP_ADDR=$PRIVATE_SERVER_IP_ADDR
@@ -35,10 +36,11 @@ done
 # Install required software on each VM
 for IP in $PUBLIC_SERVER_IP_ADDR $PUBLIC_CLIENT_IP_ADDR
 do
-scp -i aws_ssh_key -oStrictHostKeyChecking=no ./instance-env.sh ubuntu@$PUBLIC_CLIENT_IP_ADDR:/home/ubuntu
+scp -i aws_ssh_key -oStrictHostKeyChecking=no ./instance-env.sh ubuntu@$IP:/home/ubuntu
 ssh -i aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$IP <<'ENDSSH'
 set -x
 echo "source /home/ubuntu/instance-env.sh" >> /home/ubuntu/.bashrc
+source /home/ubuntu/instance-env.sh
 sudo apt-get update
 sudo apt-get install -y \
     python3 \
@@ -58,6 +60,9 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
+echo "{\"insecure-registries\" : [\"$PUBLIC_SERVER_IP_ADDR:5000\",\"$PUBLIC_SERVER_IP_ADDR:8080\"]}" > daemon.json
+sudo mv daemon.json /etc/docker/daemon.json
+sudo service docker restart
 docker run hello-world
 ENDSSH
 done

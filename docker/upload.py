@@ -15,7 +15,7 @@ def run(args):
     :return: nothing
     """
     command = " ".join(args)
-    print(f"+ {command}")
+    print(f"Py3: {command}")
     subprocess.run(args, check=True)
 
 
@@ -80,6 +80,7 @@ def measure(func):
     tock = time.time()
     return tock - tick
 
+
 def pull_and_tag(images, host="localhost"):
     """
     Pull images form docker hub and tag them for subsequent pushes
@@ -94,12 +95,12 @@ def pull_and_tag(images, host="localhost"):
 
 
 def benchmark_artipie():
-    host = os.getenv("PUBLIC_SERVER_IP_ADDR", "localhost")
+    host = os.getenv("PUBLIC_SERVER_IP_ADDR")
     upload_benchmark(images, f"{host}:8080/my-docker", "artipie")
 
 
 def benchmark_registry():
-    host = os.getenv("PUBLIC_SERVER_IP_ADDR", "localhost")
+    host = os.getenv("PUBLIC_SERVER_IP_ADDR")
     upload_benchmark(images, f"{host}:5000", "docker-registry")
 
 

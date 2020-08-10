@@ -38,7 +38,6 @@ do
 scp -i aws_ssh_key -oStrictHostKeyChecking=no ./instance-env.sh ubuntu@$PUBLIC_CLIENT_IP_ADDR:/home/ubuntu
 ssh -i aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$IP <<'ENDSSH'
 set -x
-set -e
 echo "source /home/ubuntu/instance-env.sh" >> /home/ubuntu/.bashrc
 sudo apt-get update
 sudo apt-get install -y \

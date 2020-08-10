@@ -7,10 +7,23 @@ import json
 
 images = ["ubuntu", "graphiteapp/graphite-statsd", "g4s8/artipie-base"]
 
-# Start artipie with preconfigured docker repo
+
+def run(args):
+    """
+    Run command with arguments + print command before starting it
+    :param args: command arguments
+    :return: nothing
+    """
+    command = " ".join(args)
+    print(f"+ {command}")
+    subprocess.run(args, check=True)
 
 
 def start_artipie():
+    """
+    Start artipie docker image
+    :return: nothing
+    """
     print("Starting artipie")
     artipie_yml = """
 meta:
@@ -34,72 +47,81 @@ repo:
         f.write(artipie_yml)
     with open("./configs/my-docker.yaml", "w+") as f:
         f.write(my_docker)
-    subprocess.run([
+    run([
         "bash", "-c",
         "docker run -d --rm --name artipie -it -v $(pwd)/artipie.yaml:/etc/artipie.yml -v $(pwd):/var/artipie -p 8080:80 artipie/artipie:latest"
     ])
 
 
-# Start docker registry
 def start_registry():
+    """
+    Start docker registry
+    :return: nothing
+    """
     print("Starting docker registry")
-    subprocess.run(["docker",
-                    "run",
-                    "-d",
-                    "--rm",
-                    "-it",
-                    "-p", "5000:5000",
-                    "--name", "registry",
-                    "registry:2"])
+    run(["docker",
+         "run",
+         "-d",
+         "--rm",
+         "-it",
+         "-p", "5000:5000",
+         "--name", "registry",
+         "registry:2"])
 
 
-# Measure execution time for passed function
 def measure(func):
+    """
+    Measure execution time for passed function
+    :param func: the function
+    :return: time elapsed
+    """
     tick = time.time()
     func()
     tock = time.time()
     return tock - tick
 
+def pull_and_tag(images, host="localhost"):
+    """
+    Pull images form docker hub and tag them for subsequent pushes
+    :param images: Images to pull
+    :param host: The host for tagging
+    :return: nothing
+    """
+    for image in images:
+        run(["docker", "pull", image])
+        run(["docker", "tag", image, f"{host}:5000/{image}"])
+        run(["docker", "tag", image, f"{host}:8080/my-docker/{image}"])
 
-# Perform benchmark
-def perform_benchmarks(images):
+
+def benchmark_artipie():
+    host = os.getenv("PUBLIC_SERVER_IP_ADDR", "localhost")
+    upload_benchmark(images, f"{host}:8080/my-docker", "artipie")
+
+
+def benchmark_registry():
+    host = os.getenv("PUBLIC_SERVER_IP_ADDR", "localhost")
+    upload_benchmark(images, f"{host}:5000", "docker-registry")
+
+
+def upload_benchmark(images, address, registry):
     result = \
         {"docker":
             {
                 "single-upload": {
-                    "artipie": {
-                        "images": []
-                    },
-                    "docker-registry": {
+                    registry: {
                         "images": []
                     }
                 }
             }
-         }
-    single = result["docker"]["single-upload"]
+        }
     for image in images:
-        registry_push = ["docker", "push", f"localhost:5000/{image}"]
-        registry_time = measure(lambda: subprocess.run(registry_push))
-        cmd = " ".join(registry_push)
-        print(f"Command: {cmd}\'n Elapsed: {registry_time}")
-        artipie_push = ["docker", "push", f"localhost:8080/my-docker/{image}"]
-        artipie_time = measure(lambda: subprocess.run(artipie_push))
-        cmd = " ".join(artipie_push)
-        print(f"Command: {cmd}\'n Elapsed: {artipie_time}")
-        single["artipie"]["images"].append({image: artipie_time})
-        single["docker-registry"]["images"].append({image: registry_time})
-    with open("benchmark-results.json", "w+") as f:
+        full_image = f"{address}/{image}"
+        push = ["docker", "push", full_image]
+        time = measure(lambda: run(push))
+        print(f"Pushing {full_image}; Elapsed: {time}")
+        result["docker"]["single-upload"][registry]["images"].append({image: time})
+    with open(f"benchmark-results-{registry}.json", "w+") as f:
         f.write(json.dumps(result, indent=4, sort_keys=True))
-
-# Pull images form docker hub and tag them for subsequent pushes
-
-
-def pull_and_tag(images, host="localhost"):
-    for image in images:
-        subprocess.run(["docker", "pull", image])
-        subprocess.run(["docker", "tag", image, f"{host}:5000/{image}"])
-        subprocess.run(
-            ["docker", "tag", image, f"{host}:8080/my-docker/{image}"])
 
 
 # Entry point
@@ -110,9 +132,10 @@ if __name__ == '__main__':
         pull_and_tag(images)
         start_registry()
         start_artipie()
-        perform_benchmarks(images)
-        subprocess.run(["docker", "stop", "registry"])
-        subprocess.run(["docker", "stop", "artipie"])
+        upload_benchmark(images, f"localhost:8080/my-docker", "artipie")
+        upload_benchmark(images, f"localhost:5000/", "docker-registry")
+        run(["docker", "stop", "registry"])
+        run(["docker", "stop", "artipie"])
     # Run only pulling and tagging
     elif sys.argv[1] == "pull":
         pull_and_tag(images, host=os.getenv(
@@ -123,6 +146,10 @@ if __name__ == '__main__':
     elif sys.argv[1] == "start_artipie":
         start_artipie()
     elif sys.argv[1] == "stop_registry":
-        subprocess.run(["docker", "stop", "registry"])
+        run(["docker", "stop", "registry"])
     elif sys.argv[1] == "stop_artipie":
-        subprocess.run(["docker", "stop", "artipie"])
+        run(["docker", "stop", "artipie"])
+    elif sys.argv[1] == "benchmark_artipie":
+        benchmark_artipie()
+    elif sys.argv[1] == "benchmark_registry":
+        benchmark_registry()

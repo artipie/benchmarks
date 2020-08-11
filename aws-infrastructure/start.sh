@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+set -e
 
 # Enter aws-infrastructure dir, whaterver the script is called from
 cd "$( dirname "${BASH_SOURCE[0]}" )"
@@ -9,6 +10,9 @@ if [ ! -f "aws_ssh_key" ]
 then
     ssh-keygen -t rsa -b 4096 -f aws_ssh_key -N ""
 fi
+
+eval $(ssh-agent)
+ssh-add ../aws-infrastructure/aws_ssh_key
 
 # Start AWS infrotructure
 terraform init
@@ -30,14 +34,14 @@ chmod +x instance-env.sh
 # Wait for VMs to start
 for IP in $PUBLIC_SERVER_IP_ADDR $PUBLIC_CLIENT_IP_ADDR
 do
-    until timeout 30 ssh -i aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$IP exit; do sleep 5 ; done
+    until timeout 30 ssh -oStrictHostKeyChecking=no ubuntu@$IP exit; do sleep 5 ; done
 done
 
 # Install required software on each VM
 for IP in $PUBLIC_SERVER_IP_ADDR $PUBLIC_CLIENT_IP_ADDR
 do
-scp -i aws_ssh_key -oStrictHostKeyChecking=no ./instance-env.sh ubuntu@$IP:/home/ubuntu
-ssh -i aws_ssh_key -oStrictHostKeyChecking=no ubuntu@$IP <<'ENDSSH'
+scp ./instance-env.sh ubuntu@$IP:/home/ubuntu
+ssh ubuntu@$IP <<'ENDSSH'
 set -x
 echo "source /home/ubuntu/instance-env.sh" >> /home/ubuntu/.bashrc
 source /home/ubuntu/instance-env.sh

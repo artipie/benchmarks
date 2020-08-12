@@ -33,14 +33,12 @@ if __name__ == '__main__':
         os.chdir(directory)
         subprocess.run(["bash", "-x", "run.sh"])
         for bench_result in glob.glob("*benchmark-results.json"):
-            file = open(bench_result, "r")
-            dict_merge(result, json.loads(file.read()))
-            file.close()
+            with open(bench_result, "r") as file:
+                dict_merge(result, json.loads(file.read()))
         os.chdir("..")
 
     # Write result into a file
     with open("benchmark-results.json", "w+") as file:
         file.write(json.dumps(result, indent=4, sort_keys=True))
-        file.close()
     # Fill Github Action output variable
     subprocess.run(["echo", f"::set-output name=report::benchmark-results.json"])

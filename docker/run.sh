@@ -32,7 +32,7 @@ ssh ubuntu@$PUBLIC_CLIENT_IP_ADDR "source instance-env.sh; /home/ubuntu/upload.p
 ssh ubuntu@$PUBLIC_SERVER_IP_ADDR "source instance-env.sh; /home/ubuntu/upload.py stop_registry"
 
 # Download results
-scp ubuntu@$PUBLIC_SERVER_IP_ADDR:/home/ubuntu/*.json ./
+scp ubuntu@$PUBLIC_CLIENT_IP_ADDR:/home/ubuntu/*.json ./
 
 # Stop AWS infrastructure
 ../aws-infrastructure/stop.sh

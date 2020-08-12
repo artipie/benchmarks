@@ -19,9 +19,10 @@ def run(args):
     subprocess.run(args, check=True)
 
 
-def start_artipie():
+def start_artipie(version=os.getenv("ARTIPIE_VERSION", "latest")):
     """
     Start artipie docker image
+    :param version: The artipie version to start
     :return: nothing
     """
     print("Starting artipie")
@@ -49,7 +50,7 @@ repo:
         f.write(my_docker)
     run([
         "bash", "-c",
-        "docker run -d --rm --name artipie -it -v $(pwd)/artipie.yaml:/etc/artipie.yml -v $(pwd):/var/artipie -p 8080:80 artipie/artipie:latest"
+        f"docker run -d --rm --name artipie -it -v $(pwd)/artipie.yaml:/etc/artipie.yml -v $(pwd):/var/artipie -p 8080:80 artipie/artipie:{version}"
     ])
 
 
@@ -121,7 +122,7 @@ def upload_benchmark(images, address, registry):
         time = measure(lambda: run(push))
         print(f"Pushing {full_image}; Elapsed: {time}")
         result["docker"]["single-upload"][registry]["images"].append({image: time})
-    with open(f"benchmark-results-{registry}.json", "w+") as f:
+    with open(f"{registry}-benchmark-results.json", "w+") as f:
         f.write(json.dumps(result, indent=4, sort_keys=True))
 
 

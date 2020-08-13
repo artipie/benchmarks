@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import os
+import sys
 import subprocess
 import collections.abc
 import json
@@ -22,6 +23,11 @@ def dict_merge(dct, merge_dct):
 
 
 if __name__ == '__main__':
+    # Remember the dir to get back to in the end
+    workdir = os.getcwd()
+    # Enter dir with actual script location
+    os.chdir(sys.path[0])
+
     # Directories included into benchmarking suit
     directories = ["docker", "sample"]
 
@@ -36,6 +42,10 @@ if __name__ == '__main__':
             with open(bench_result, "r") as file:
                 dict_merge(result, json.loads(file.read()))
         os.chdir("..")
+
+    # If running as a Github Action report results into the initial dir
+    if os.getenv("CI") == "true":
+        os.chdir(os.getenv("GITHUB_WORKSPACE"))
 
     # Write result into a file
     with open("benchmark-results.json", "w+") as file:

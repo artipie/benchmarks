@@ -97,6 +97,8 @@ def pull_and_tag(images, host="localhost"):
 
 def benchmark_artipie():
     host = os.getenv("PUBLIC_SERVER_IP_ADDR")
+    run(["docker", "login", "--username", "alice",
+         "--password", "qwerty123", f"{host}:8080"])
     upload_benchmark(images, f"{host}:8080/my-docker", "artipie")
 
 

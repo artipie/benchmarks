@@ -41,6 +41,7 @@ if __name__ == '__main__':
         for bench_result in glob.glob("*benchmark-results.json"):
             with open(bench_result, "r") as file:
                 dict_merge(result, json.loads(file.read()))
+            os.remove(bench_result)
         os.chdir("..")
         # stop infrastructure even if script has failed
         subprocess.run(["bash", "-x", "aws-infrastructure/stop.sh"])

@@ -42,6 +42,8 @@ if __name__ == '__main__':
             with open(bench_result, "r") as file:
                 dict_merge(result, json.loads(file.read()))
         os.chdir("..")
+        # stop infrastructure even if script has failed
+        subprocess.run(["bash", "-x", "aws-infrastructure/stop.sh"])
 
     # If running as a Github Action report results into the initial dir
     if os.getenv("CI") == "true":

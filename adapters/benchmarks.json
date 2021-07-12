@@ -1,0 +1,82 @@
+{
+	"rpm": {
+		"name": "Rpm adapter",
+		"repository": "https://github.com/artipie/rpm-adapter.git",
+		"benchmakrs": {
+			"path": "benchmakrs",
+			"cases": [
+				{
+					"name": "Batch update",
+					"class": "com.artipie.rpm.Rpm.batchUpdateIncrementally",
+					"data": "https://artipie.s3.amazonaws.com/rpm-test/bundle100.tar.gz",
+					"output": "rpm-batch-update.txt"
+				},
+				{
+					"name": "Remove",
+					"class": "com.artipie.rpm.RpmMetadata.Remove",
+					"data": "https://artipie.s3.amazonaws.com/rpm-test/centos-7-os-x86_64-repodata.tar.gz",
+					"output": "rpm-remove.txt"
+				},
+				{
+					"name": "Append",
+					"class": "com.artipie.rpm.RpmMetadata.Append",
+					"data": "https://artipie.s3.amazonaws.com/rpm-test/rpm-metadata-append-bench.tar.gz",
+					"output": "rpm-append.txt"
+				}
+			]
+		}
+	},
+	"debian": {
+		"name": "Debian adapter",
+		"repository": "https://github.com/artipie/debian-adapter.git",
+		"benchmakrs": {
+			"path": "benchmakrs",
+			"cases": [
+				{
+					"name": "Merge index",
+					"class": "org.openjdk.jmh.Main",
+					"args": ["IndexMergeBench"],
+					"data": "https://artipie.s3.amazonaws.com/debian-test/debian-merge.tar.gz",
+					"output": "debian-merge-index.txt"
+				},
+				{
+					"name": "Repo update",
+					"class": "org.openjdk.jmh.Main",
+					"args": ["RepoUpdateBench "],
+					"data": "https://artipie.s3.amazonaws.com/debian-test/debian-repo.tar.gz",
+					"output": "debian-merge-index.txt"
+				}
+			]
+		}
+	},
+	"helm": {
+		"name": "Helm adapter",
+		"repository": "https://github.com/artipie/helm-adapter.git",
+		"benchmakrs": {
+			"path": "benchmakrs",
+			"cases": [
+				{
+					"name": "Helm remove",
+					"class": "org.openjdk.jmh.Main",
+					"args": ["HelmAstoRemoveBench"],
+					"data": "https://artipie.s3.amazonaws.com/helm-test/helm100.tar.gz",
+					"output": "helm-remove.txt"
+				},
+				{
+					"name": "Helm add",
+					"class": "org.openjdk.jmh.Main",
+					"args": ["HelmAstoAddBench"],
+					"data": "https://artipie.s3.amazonaws.com/helm-test/helm100.tar.gz",
+					"output": "helm-add.txt"
+				},
+				{
+					"name": "Helm reindex",
+					"class": "org.openjdk.jmh.Main",
+					"args": ["HelmAstoReindexBench"],
+					"data": "https://artipie.s3.amazonaws.com/helm-test/helm100.tar.gz",
+					"output": "helm-reindex.txt"
+				}
+			]
+		}
+	}
+}

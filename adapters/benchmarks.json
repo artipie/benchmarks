@@ -7,23 +7,23 @@
                         "cases": [
                                 {
                                         "name": "Batch update",
-                                        "class": "com.artipie.rpm.Rpm.batchUpdateIncrementally",
+                                        "class": "org.openjdk.jmh.Main",
                                         "data": "https://artipie.s3.amazonaws.com/rpm-test/bundle100.tar.gz",
-                                        "args": [],
+                                        "args": ["RpmBench"],
                                         "output": "rpm-batch-update.txt"
                                 },
                                 {
                                         "name": "Remove",
-                                        "class": "com.artipie.rpm.RpmMetadata.Remove",
+                                        "class": "org.openjdk.jmh.Main",
                                         "data": "https://artipie.s3.amazonaws.com/rpm-test/centos-7-os-x86_64-repodata.tar.gz",
-                                        "args": [],
+                                        "args": ["RpmMetadataRemoveBench"],
                                         "output": "rpm-remove.txt"
                                 },
                                 {
                                         "name": "Append",
-                                        "class": "com.artipie.rpm.RpmMetadata.Append",
+                                        "class": "org.openjdk.jmh.Main",
                                         "data": "https://artipie.s3.amazonaws.com/rpm-test/rpm-metadata-append-bench.tar.gz",
-                                        "args": [],
+                                        "args": ["RpmMetadataAppendBench"],
                                         "output": "rpm-append.txt"
                                 }
                         ]
@@ -45,7 +45,7 @@
                                 {
                                         "name": "Repo update",
                                         "class": "org.openjdk.jmh.Main",
-                                        "args": ["RepoUpdateBench "],
+                                        "args": ["RepoUpdateBench"],
                                         "data": "https://artipie.s3.amazonaws.com/debian-test/debian-repo.tar.gz",
                                         "output": "debian-merge-index.txt"
                                 }
@@ -78,6 +78,22 @@
                                         "args": ["HelmAstoReindexBench"],
                                         "data": "https://artipie.s3.amazonaws.com/helm-test/helm100.tar.gz",
                                         "output": "helm-reindex.txt"
+                                }
+                        ]
+                }
+        },
+        "conda": {
+                "name": "Conda adapter",
+                "repo": "https://github.com/artipie/conda-adapter.git",
+                "benchmarks": {
+                        "path": "benchmarks",
+                        "cases": [
+                                {
+                                        "name": "Remove",
+                                        "class": "org.openjdk.jmh.Main",
+                                        "data": "https://artipie.s3.amazonaws.com/conda-test/conda-remove.tar.gz",
+                                        "args": ["CondaRepodataRemoveBench"],
+                                        "output": "conda-remove.txt"
                                 }
                         ]
                 }

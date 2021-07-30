@@ -94,6 +94,20 @@
                                         "data": "https://artipie.s3.amazonaws.com/conda-test/conda-remove.tar.gz",
                                         "args": ["CondaRepodataRemoveBench"],
                                         "output": "conda-remove.txt"
+                                },
+                                {
+                                        "name": "Append",
+                                        "class": "org.openjdk.jmh.Main",
+                                        "data": "https://artipie.s3.amazonaws.com/conda-test/conda-append.tar.gz",
+                                        "args": ["CondaRepodataAppendBench"],
+                                        "output": "conda-append.txt"
+                                },
+                                {
+                                        "name": "Merge",
+                                        "class": "org.openjdk.jmh.Main",
+                                        "data": "https://artipie.s3.amazonaws.com/conda-test/conda-merge.tar.gz",
+                                        "args": ["MultiRepodataBench"],
+                                        "output": "conda-merge.txt"
                                 }
                         ]
                 }

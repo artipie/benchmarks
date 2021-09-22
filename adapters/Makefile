@@ -6,24 +6,24 @@ TARGET=helm
 all: distclean run
 
 distclean: outclean
-        /bin/bash ./script.sh clean $(TARGET)
+		/bin/bash ./script.sh clean $(TARGET)
 
 outclean:
-        rm -fr out/$(TARGET)
+		rm -fr out/$(TARGET)
 
 generate:
-        rm -f script.sh
-        /bin/env python3 ./generate.py $(BENCH_SOURCE) > script.sh
-        chmod +x script.sh
+		rm -f script.sh
+		/bin/env python3 ./generate.py $(BENCH_SOURCE) > script.sh
+		chmod +x script.sh
 
 clone: generate
-        /bin/bash ./script.sh clone $(TARGET)
+		/bin/bash ./script.sh clone $(TARGET)
 
 build: distclean clone
-        /bin/bash ./script.sh build $(TARGET)
+		/bin/bash ./script.sh build $(TARGET)
 
 prepare: generate
-        /bin/bash ./script.sh prepare $(TARGET)
+		/bin/bash ./script.sh prepare $(TARGET)
 
 run: generate build prepare
-        /bin/bash ./script.sh run $(TARGET)
+		/bin/bash ./script.sh run $(TARGET)

@@ -26,5 +26,4 @@ prepare: generate
         /bin/bash ./script.sh prepare $(TARGET)
 
 run: generate build prepare
-        @echo !!run
         /bin/bash ./script.sh run $(TARGET)

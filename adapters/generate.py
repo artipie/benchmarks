@@ -16,9 +16,6 @@ set -e
 # workdir
 W=/tmp/artipie-bench
 
-function clean {{
-    rm -fr $W
-}}
 
 CMD=$1
 NAME=$2
@@ -51,25 +48,37 @@ for name in data:
 
     run = """
     function _{name}_run {{
-        mkdir -p out
+        mkdir -p out/{name}
     """.format(name=name)
 
     cnt = 1
     for case in data[name]['benchmarks']['cases']:
+        tar = "$W/_{name}_case{cnt}.tar.gz".format(name=name, cnt=cnt)
         prepare += """
             mkdir -p $W/_{name}_case{cnt}
-            curl {url} > $W/_{name}_case{cnt}.tar.gz
-            tar -xvzf $W/_{name}_case{cnt}.tar.gz -C $W/_{name}_case{cnt}
-        """.format(url=case['data'], name=name, cnt=cnt)
+            if [ -f {tar} ]; then
+                hashed=$(md5sum {tar} | grep -o '^[^ ]*')
+                hdr=$(curl -I {url} | grep -i Etag | grep -o ' ".*"' | grep -o '[^"]*')
+                if [ $hdr == $hashed ]; then
+                    echo "Data `{tar}` already exists with correct md5sum. It is not necessary to download with curl again."
+                else
+                    curl {url} > {tar}
+                    tar -xvzf $W/_{name}_case{cnt}.tar.gz -C $W/_{name}_case{cnt}
+                fi
+            else
+                curl {url} > {tar}
+                tar -xvzf $W/_{name}_case{cnt}.tar.gz -C $W/_{name}_case{cnt}
+            fi
+        """.format(url=case['data'], name=name, cnt=cnt, tar=tar)
         cp = "$W/{name}/{bench}/target/".format(name=name, bench=data[name]['benchmarks']['path'])
         run += """
             echo "running {name} - {case}"
-            env BENCH_DIR=$W/_{name}_case{cnt} java \\
-                -cp "{cp}/benchmarks.jar:{cp}/classes/*:{cp}/dependency/*" \\
-                {cls} {args} > out/{out}
+            env BENCH_DIR=$W/_{name}_case{cnt}/{tar_path} java \\
+                -cp "{cp}benchmarks.jar:{cp}classes/*:{cp}dependency/*" \\
+                {cls} {args} > out/{name}/{out}
         """.format(name=name,
                 case=case['name'], cp=cp, cls=case['class'], args=" ".join(case['args']),
-                out=case['output'], cnt=cnt)
+                out=case['output'], cnt=cnt, tar_path=case['path-in-tar'])
         cnt += 1
     prepare += """
     }
@@ -81,6 +90,10 @@ for name in data:
     script += run
 
 script += """
+function clean {
+    rm -fr $W/${NAME}
+}
+
 function clone {
     _${NAME}_clone
 }

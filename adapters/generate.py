@@ -63,12 +63,11 @@ for name in data:
                     echo "Data `{tar}` already exists with correct md5sum. It is not necessary to download with curl again."
                 else
                     curl {url} > {tar}
-                    tar -xvzf $W/_{name}_case{cnt}.tar.gz -C $W/_{name}_case{cnt}
                 fi
             else
                 curl {url} > {tar}
-                tar -xvzf $W/_{name}_case{cnt}.tar.gz -C $W/_{name}_case{cnt}
             fi
+            tar -xvzf $W/_{name}_case{cnt}.tar.gz -C $W/_{name}_case{cnt}
         """.format(url=case['data'], name=name, cnt=cnt, tar=tar)
         cp = "$W/{name}/{bench}/target/".format(name=name, bench=data[name]['benchmarks']['path'])
         run += """

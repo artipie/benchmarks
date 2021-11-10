@@ -56,28 +56,18 @@ for name in data:
         tar = "$W/_{name}_case{cnt}.tar.gz".format(name=name, cnt=cnt)
         prepare += """
             mkdir -p $W/_{name}_case{cnt}
-            if [ -f {tar} ]; then
-                hashed=$(md5sum {tar} | grep -o '^[^ ]*')
-                hdr=$(curl -I {url} | grep -i Etag | grep -o ' ".*"' | grep -o '[^"]*')
-                if [ $hdr == $hashed ]; then
-                    echo "Data `{tar}` already exists with correct md5sum. It is not necessary to download with curl again."
-                else
-                    curl {url} > {tar}
-                fi
-            else
-                curl {url} > {tar}
-            fi
+            curl -k {url} > {tar}
             tar -xvzf $W/_{name}_case{cnt}.tar.gz -C $W/_{name}_case{cnt}
         """.format(url=case['data'], name=name, cnt=cnt, tar=tar)
         cp = "$W/{name}/{bench}/target/".format(name=name, bench=data[name]['benchmarks']['path'])
         run += """
             echo "running {name} - {case}"
-            env BENCH_DIR=$W/_{name}_case{cnt}/{tar_path} java \\
+            env BENCH_DIR=$W/_{name}_case{cnt} java \\
                 -cp "{cp}benchmarks.jar:{cp}classes/*:{cp}dependency/*" \\
                 {cls} {args} > out/{name}/{out}
         """.format(name=name,
                 case=case['name'], cp=cp, cls=case['class'], args=" ".join(case['args']),
-                out=case['output'], cnt=cnt, tar_path=case['path-in-tar'])
+                out=case['output'], cnt=cnt)
         cnt += 1
     prepare += """
     }

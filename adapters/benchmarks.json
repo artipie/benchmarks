@@ -8,26 +8,23 @@
                                 {
                                         "name": "Batch update",
                                         "class": "org.openjdk.jmh.Main",
-                                        "data": "https://artipie.s3.amazonaws.com/rpm-test/bundle100.tar.gz",
+                                        "data": "https://central.artipie.com/artipie/bin/rpm-batch-update.tar.gz",
                                         "args": ["RpmBench"],
-                                        "output": "rpm-batch-update.txt",
-                                        "path-in-tar": "bundle100/"
+                                        "output": "rpm-batch-update.txt"
                                 },
                                 {
                                         "name": "Remove",
                                         "class": "org.openjdk.jmh.Main",
-                                        "data": "https://artipie.s3.amazonaws.com/rpm-test/centos-7-os-x86_64-repodata.tar.gz",
+                                        "data": "https://central.artipie.com/artipie/bin/rpm-metadata-remove.tar.gz",
                                         "args": ["RpmMetadataRemoveBench"],
-                                        "output": "rpm-remove.txt",
-                                        "path-in-tar": ""
+                                        "output": "rpm-remove.txt"
                                 },
                                 {
                                         "name": "Append",
                                         "class": "org.openjdk.jmh.Main",
-                                        "data": "https://artipie.s3.amazonaws.com/rpm-test/rpm-metadata-append-bench.tar.gz",
+                                        "data": "https://central.artipie.com/artipie/bin/rpm-metadata-append.tar.gz",
                                         "args": ["RpmMetadataAppendBench"],
-                                        "output": "rpm-append.txt",
-                                        "path-in-tar": "Downloads/rpm-metadata-append-bench/"
+                                        "output": "rpm-append.txt"
                                 }
                         ]
                 }
@@ -42,17 +39,15 @@
                                         "name": "Merge index",
                                         "class": "org.openjdk.jmh.Main",
                                         "args": ["IndexMergeBench"],
-                                        "data": "https://artipie.s3.amazonaws.com/debian-test/debian-merge.tar.gz",
-                                        "output": "debian-merge-index.txt",
-                                        "path-in-tar": "Downloads/deb-merge/"
+                                        "data": "https://central.artipie.com/artipie/bin/debian-merge.tar.gz",
+                                        "output": "debian-merge.txt"
                                 },
                                 {
                                         "name": "Repo update",
                                         "class": "org.openjdk.jmh.Main",
                                         "args": ["RepoUpdateBench"],
-                                        "data": "https://artipie.s3.amazonaws.com/debian-test/debian-repo.tar.gz",
-                                        "output": "debian-merge-index.txt",
-                                        "path-in-tar": "Downloads/deb-packages/"
+                                        "data": "https://central.artipie.com/artipie/bin/debian-repo.tar.gz",
+                                        "output": "debian-update.txt"
                                 }
                         ]
                 }
@@ -66,25 +61,22 @@
                                         "name": "Helm remove",
                                         "class": "org.openjdk.jmh.Main",
                                         "args": ["HelmAstoRemoveBench"],
-                                        "data": "https://artipie.s3.amazonaws.com/helm-test/helm100.tar.gz",
-                                        "output": "helm-remove.txt",
-                                        "path-in-tar": "bundle100/"
+                                        "data": "https://central.artipie.com/artipie/bin/helm-remove.tar.gz",
+                                        "output": "helm-remove.txt"
                                 },
                                 {
                                         "name": "Helm add",
                                         "class": "org.openjdk.jmh.Main",
                                         "args": ["HelmAstoAddBench"],
-                                        "data": "https://artipie.s3.amazonaws.com/helm-test/helm100.tar.gz",
-                                        "output": "helm-add.txt",
-                                        "path-in-tar": "bundle100/"
+                                        "data": "https://central.artipie.com/artipie/bin/helm-add.tar.gz",
+                                        "output": "helm-add.txt"
                                 },
                                 {
                                         "name": "Helm reindex",
                                         "class": "org.openjdk.jmh.Main",
                                         "args": ["HelmAstoReindexBench"],
-                                        "data": "https://artipie.s3.amazonaws.com/helm-test/helm100.tar.gz",
-                                        "output": "helm-reindex.txt",
-                                        "path-in-tar": "bundle100/"
+                                        "data": "https://central.artipie.com/artipie/bin/helm-reindex.tar.gz",
+                                        "output": "helm-reindex.txt"
                                 }
                         ]
                 }
@@ -98,26 +90,23 @@
                                 {
                                         "name": "Remove",
                                         "class": "org.openjdk.jmh.Main",
-                                        "data": "https://artipie.s3.amazonaws.com/conda-test/conda-remove.tar.gz",
+                                        "data": "https://central.artipie.com/artipie/bin/conda-remove.tar.gz",
                                         "args": ["CondaRepodataRemoveBench"],
-                                        "output": "conda-remove.txt",
-                                        "path-in-tar": ""
+                                        "output": "conda-remove.txt"
                                 },
                                 {
                                         "name": "Append",
                                         "class": "org.openjdk.jmh.Main",
-                                        "data": "https://artipie.s3.amazonaws.com/conda-test/conda-append.tar.gz",
+                                        "data": "https://central.artipie.com/artipie/bin/conda-append.tar.gz",
                                         "args": ["CondaRepodataAppendBench"],
-                                        "output": "conda-append.txt",
-                                        "path-in-tar": ""
+                                        "output": "conda-append.txt"
                                 },
                                 {
                                         "name": "Merge",
                                         "class": "org.openjdk.jmh.Main",
-                                        "data": "https://artipie.s3.amazonaws.com/conda-test/conda-merge.tar.gz",
+                                        "data": "https://central.artipie.com/artipie/bin/conda-merge.tar.gz",
                                         "args": ["MultiRepodataBench"],
-                                        "output": "conda-merge.txt",
-                                        "path-in-tar": ""
+                                        "output": "conda-merge.txt"
                                 }
                         ]
                 }

@@ -1,9 +1,9 @@
 # It is supposed that results are located in folder `scan_path`.
 # Each result represents a folder with name which is equal to version.
 # After commiting some results it walks through folder with specified
-# version in `scan_path` and appends results to the README.
+# version in `scan_path` and appends results to the results file.
 # It is important that table with results is located in the bottom of the
-# README file. Also only lines with result tables should start with the
+# results file. Also only lines with result tables should start with the
 # symbol `|`.
 
 import argparse
@@ -13,7 +13,7 @@ from os.path import isfile, join
 parser = argparse.ArgumentParser(description='Script for parsing JMH benchmarks results')
 PLUS_MINUS = '±'
 VERSION = 'Version'
-README = 'README.md'
+RESULTS = 'results.md'
 TABLE_COL = ':---:'
 NO_RES = '-'
 SCAN_PATH = join('benchmarks', 'results')
@@ -62,9 +62,9 @@ if __name__ == '__main__':
     res = dict(sorted(res.items()))
     all = {}
     map_col = {}
-    with open(join(SCAN_PATH, README), 'r', encoding='utf-8') as f:
+    with open(join(SCAN_PATH, RESULTS), 'r', encoding='utf-8') as f:
         lines = f.readlines()
-    with open(join(SCAN_PATH, README), 'w', encoding='utf-8') as f:
+    with open(join(SCAN_PATH, RESULTS), 'w', encoding='utf-8') as f:
         for line in lines:
             if line.startswith(f'|{VERSION}') or line.startswith(f'| {VERSION}'):
                 # Remembers names of the columns of the table with results
@@ -83,7 +83,7 @@ if __name__ == '__main__':
                 f.write(line)
         f.write('\n')
 
-        # Align column names (some column can be added or disappear)
+        # Align column names (some columns can be added or disappear)
         # Were some columns removed (e.g. results of benchmarks were not obtained)?
         for old in (all.keys() - res.keys()):
             res[old] = NO_RES
@@ -103,7 +103,7 @@ if __name__ == '__main__':
                 all[key] = [res[key]]
         cols = list(all.keys())
         cols.remove(VERSION)
-        # Adds lines to the README
+        # Adds lines to the file with results
         names = '|'.join(cols)
         f.write(f'|{VERSION}|{names}|\n')
         for i in range(len(all[VERSION])):

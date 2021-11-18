@@ -1,7 +1,9 @@
 BENCH_SOURCE=benchmarks.json
 TARGET=helm
+TAG=v0.0.0
+NUMBER_CHARTS=5
 
-.PHONY: all outclean clone run generate build prepare distclean
+.PHONY: all outclean clone run generate build prepare distclean write_results draw_charts
 
 all: distclean run
 
@@ -27,3 +29,10 @@ prepare: generate
 
 run: generate build prepare
 		/bin/bash ./script.sh run $(TARGET)
+
+write_results:
+		python3 ./scripts/writeresults.py $(TAG)
+
+draw_charts: write_results
+		pip install matplotlib
+		python3 ./scripts/charts.py $(NUMBER_CHARTS)

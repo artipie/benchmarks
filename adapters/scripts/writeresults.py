@@ -19,11 +19,13 @@ NO_RES = '-'
 SCAN_PATH = join('benchmarks', 'results')
 
 
-def release_version():
+def add_args():
     parser.add_argument('version', type=str,
-                        help='A required argument - version of the release')
-    args = parser.parse_args()
-    return args.version
+                            help='A required argument - version of the release')
+    parser.add_argument('output', type=str,
+                            nargs='?',
+                            help='An optional argument - path to the output file with table with results',
+                            default=RESULTS)
 
 
 def folder_with_res(vers):
@@ -54,7 +56,10 @@ def add_results(files, res):
 
 
 if __name__ == '__main__':
-    vers = release_version()
+    add_args()
+    args = parser.parse_args()
+    vers = args.version
+    output = args.output
     path = folder_with_res(vers)
     res = {VERSION: vers}
     files = [f for f in listdir(path) if isfile(join(path, f))]
@@ -62,9 +67,9 @@ if __name__ == '__main__':
     res = dict(sorted(res.items()))
     all = {}
     map_col = {}
-    with open(join(SCAN_PATH, RESULTS), 'r', encoding='utf-8') as f:
+    with open(join(SCAN_PATH, output), 'r', encoding='utf-8') as f:
         lines = f.readlines()
-    with open(join(SCAN_PATH, RESULTS), 'w', encoding='utf-8') as f:
+    with open(join(SCAN_PATH, output), 'w', encoding='utf-8') as f:
         for line in lines:
             if line.startswith(f'|{VERSION}') or line.startswith(f'| {VERSION}'):
                 # Remembers names of the columns of the table with results

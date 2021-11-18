@@ -30,7 +30,7 @@ prepare: generate
 run: generate build prepare
 		/bin/bash ./script.sh run $(TARGET)
 
-write_results:
+write_results: run
 		python3 ./scripts/writeresults.py $(TAG)
 
 draw_charts: write_results

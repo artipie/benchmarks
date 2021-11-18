@@ -3,7 +3,7 @@ TARGET=helm
 TAG=v0.0.0
 NUMBER_CHARTS=5
 
-.PHONY: all outclean clone run generate build prepare distclean write_results draw_charts
+.PHONY: all outclean clone run generate build prepare distclean write-results draw-charts
 
 all: distclean run
 
@@ -30,9 +30,9 @@ prepare: generate
 run: generate build prepare
 		/bin/bash ./script.sh run $(TARGET)
 
-write_results: run
+write-results: run
 		python3 ./scripts/writeresults.py $(TAG)
 
-draw_charts: write_results
+draw-charts: write-results
 		pip install matplotlib
 		python3 ./scripts/charts.py $(NUMBER_CHARTS)

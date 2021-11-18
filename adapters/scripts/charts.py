@@ -56,5 +56,5 @@ if __name__ == '__main__':
         plt.xlabel('Versions', fontdict=font)
         plt.ylabel('ms / op', fontdict=font)
         plt.grid()
-        plt.savefig(f'{col}.png')
+        plt.savefig(f'{join(SCAN_PATH, col)}.png')
         plt.close()

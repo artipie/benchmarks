@@ -30,6 +30,9 @@ for name in data:
     script += """
     function _{name}_clone {{
         git clone {repo} $W/{name}
+        cd $W/{name}
+        git checkout $REF
+        cd ..
     }}
 
     function _{name}_name {{

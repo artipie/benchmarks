@@ -1,6 +1,6 @@
 BENCH_SOURCE=benchmarks.json
-TARGET=helm
-TAG=v0.0.0
+TARGET=
+TAG=
 NUMBER_CHARTS=5
 
 .PHONY: all outclean clone run generate build prepare distclean write-results draw-charts

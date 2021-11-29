@@ -1,27 +1,38 @@
 import argparse
 import matplotlib.pyplot as plt
-from writeresults import SCAN_PATH, RESULTS, VERSION, TABLE_COL, NO_RES, PLUS_MINUS
+from main import VERSION, TABLE_COL, NO_RES, PLUS_MINUS
 from os.path import join
 
 
-parser = argparse.ArgumentParser(description='Script for plotting charts with JMH benchmarks results')
 ALL_CHARTS = -1
 
 
-def number_of_charts():
+parser = argparse.ArgumentParser(description='Script for parsing JMH benchmarks results')
+
+
+def add_args():
+    parser.add_argument('name', type=str,
+                        help='A required argument - name of the repository')
     parser.add_argument('number', type=int,
                         help='Number charts - for what number of versions the charts will be plotted',
                         nargs='?',
                         default=ALL_CHARTS)
-    args = parser.parse_args()
-    return args.number
+    parser.add_argument('output', type=str,
+                        nargs='?',
+                        help='An optional argument - path to the output file with table with results')
 
 
 if __name__ == '__main__':
-    num_charts = number_of_charts()
+    add_args()
+    args = parser.parse_args()
+    num_charts = args.number
+    res_tbl = args.output
+    repo_name = args.name
+    if res_tbl is None:
+        res_tbl = join(sep, 'tmp', 'artipie-bench', name, 'benchmarks', 'results', 'results.md')
     rows = {}
     map_col = {}
-    with open(join(SCAN_PATH, RESULTS), 'r', encoding='utf-8') as f:
+    with open(res_tbl, 'r', encoding='utf-8') as f:
         lines = f.readlines()
         for line in lines:
             if line.startswith(f'|{VERSION}') or line.startswith(f'| {VERSION}'):
@@ -56,5 +67,7 @@ if __name__ == '__main__':
         plt.xlabel('Versions', fontdict=font)
         plt.ylabel('ms / op', fontdict=font)
         plt.grid()
-        plt.savefig(f'{join(SCAN_PATH, col)}.png')
+        img_name = join('out', repo_name, col)
+        print(img_name)
+        plt.savefig(f'{img_name}.png')
         plt.close()

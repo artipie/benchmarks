@@ -31,8 +31,8 @@ run: generate build prepare
 		/bin/bash ./script.sh run $(TARGET)
 
 write-results: run
-		python3 ./scripts/writeresults.py $(TAG)
+		python3 ./scripts/writeresults.py $(TAG) $(TARGET)
 
 draw-charts: write-results
 		pip install matplotlib
-		python3 ./scripts/charts.py $(NUMBER_CHARTS)
+		python3 ./scripts/charts.py $(TARGET) $(NUMBER_CHARTS)

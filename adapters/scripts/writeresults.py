@@ -7,35 +7,25 @@
 # symbol `|`.
 
 import argparse
-from os import sep, listdir, scandir
-from os.path import isfile, join
+from os import sep, listdir
+from os.path import isfile, join, exists
 
 parser = argparse.ArgumentParser(description='Script for parsing JMH benchmarks results')
 PLUS_MINUS = '±'
 VERSION = 'Version'
-RESULTS = 'results.md'
 TABLE_COL = ':---:'
+IMG_FLDR = None
 NO_RES = '-'
-SCAN_PATH = join('benchmarks', 'results')
 
 
 def add_args():
     parser.add_argument('version', type=str,
                             help='A required argument - version of the release')
+    parser.add_argument('name', type=str,
+                            help='A required argument - name of the repository')
     parser.add_argument('output', type=str,
                             nargs='?',
-                            help='An optional argument - path to the output file with table with results',
-                            default=RESULTS)
-
-
-def folder_with_res(vers):
-    dirs = [f.path for f in scandir(SCAN_PATH) if f.is_dir()]
-    # Selects only path which last folder name is equal to the passed version
-    dirs = list(filter(lambda dir: dir.split(sep)[-1] == vers, dirs))
-    # Checks whether folder exists
-    if len(dirs) != 1:
-        raise ValueError(f'Should be exactly one folder with name `{vers}`. Current folders: `{dirs}`')
-    return dirs[0]
+                            help='An optional argument - path to the output file with table with results')
 
 
 def add_results(files, res):
@@ -59,17 +49,21 @@ if __name__ == '__main__':
     add_args()
     args = parser.parse_args()
     vers = args.version
-    output = args.output
-    path = folder_with_res(vers)
+    res_tbl = args.output
+    name = args.name
+    if res_tbl is None:
+        res_tbl = join(sep, 'tmp', 'artipie-bench', name, 'benchmarks', 'results', 'results.md')
+    path = join('out', name)
     res = {VERSION: vers}
     files = [f for f in listdir(path) if isfile(join(path, f))]
     add_results(files, res)
     res = dict(sorted(res.items()))
     all = {}
     map_col = {}
-    with open(join(SCAN_PATH, output), 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-    with open(join(SCAN_PATH, output), 'w', encoding='utf-8') as f:
+    if exists(res_tbl):
+        with open(res_tbl, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+    with open(res_tbl, 'w', encoding='utf-8') as f:
         for line in lines:
             if line.startswith(f'|{VERSION}') or line.startswith(f'| {VERSION}'):
                 # Remembers names of the columns of the table with results
@@ -86,7 +80,6 @@ if __name__ == '__main__':
                         all[map_col[idx]].append(val)
             else:
                 f.write(line)
-        f.write('\n')
 
         # Align column names (some columns can be added or disappear)
         # Were some columns removed (e.g. results of benchmarks were not obtained)?

@@ -63,6 +63,8 @@ if __name__ == '__main__':
     if exists(res_tbl):
         with open(res_tbl, 'r', encoding='utf-8') as f:
             lines = f.readlines()
+    else:
+        lines = []
     with open(res_tbl, 'w', encoding='utf-8') as f:
         for line in lines:
             if line.startswith(f'|{VERSION}') or line.startswith(f'| {VERSION}'):

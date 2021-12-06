@@ -41,7 +41,7 @@ for name in data:
 
     function _{name}_build {{
         mvn install -f $W/{name} -DskipTests
-        mvn package -f $W/{name}/{bench}
+        mvn package -f $W/{name}/{bench} -DskipTests
     }}
     """.format(name=name, repo=data[name]['repo'], bench=data[name]['benchmarks']['path'])
 

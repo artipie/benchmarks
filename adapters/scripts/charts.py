@@ -1,6 +1,7 @@
 import argparse
 import matplotlib.pyplot as plt
-from main import VERSION, TABLE_COL, NO_RES, PLUS_MINUS
+from writeresults import VERSION, TABLE_COL, NO_RES, PLUS_MINUS
+from os import sep
 from os.path import join
 
 
@@ -29,7 +30,7 @@ if __name__ == '__main__':
     res_tbl = args.output
     repo_name = args.name
     if res_tbl is None:
-        res_tbl = join(sep, 'tmp', 'artipie-bench', name, 'benchmarks', 'results', 'results.md')
+        res_tbl = join(sep, 'tmp', 'artipie-bench', repo_name, 'benchmarks', 'results', 'results.md')
     rows = {}
     map_col = {}
     with open(res_tbl, 'r', encoding='utf-8') as f:

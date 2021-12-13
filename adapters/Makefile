@@ -32,7 +32,9 @@ run: generate build prepare
 
 write-results: run
 		python3 ./scripts/writeresults.py $(TAG) $(TARGET)
+		cp -av /tmp/artipie-bench/$(TARGET)/benchmarks/results/results.md ../../benchmarks/results/results.md
 
 draw-charts: write-results
-		pip install matplotlib
 		python3 ./scripts/charts.py $(TARGET) $(NUMBER_CHARTS)
+		mkdir -p ../../benchmarks/results/$(TAG)
+		cp -avr ./out/$(TARGET)/* ../../benchmarks/results/$(TAG)

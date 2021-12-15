@@ -38,3 +38,4 @@ draw-charts: write-results
 		python3 ./scripts/charts.py $(TARGET) $(NUMBER_CHARTS)
 		mkdir -p ../../benchmarks/results/$(TAG)
 		cp -avr ./out/$(TARGET)/* ../../benchmarks/results/$(TAG)
+		cp -av /tmp/artipie-bench/$(TARGET)/benchmarks/results/results.md ../../benchmarks/results/results.md

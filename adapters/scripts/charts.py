@@ -55,6 +55,7 @@ if __name__ == '__main__':
     versions = rows.pop(VERSION)
     cols = list(rows.keys())
     font = dict(fontsize=12)
+    imgs = {}
     for col in cols:
         vals = list(map(float, rows[col]))
         if num_charts != ALL_CHARTS and len(vals) > num_charts:
@@ -68,7 +69,16 @@ if __name__ == '__main__':
         plt.xlabel('Versions', fontdict=font)
         plt.ylabel('ms / op', fontdict=font)
         plt.grid()
-        img_name = join('out', repo_name, col)
+        img_name = join('out', repo_name, f'{col}.png')
+        imgs[col] = join(versions[-1], f'{col}.png')
         print(img_name)
-        plt.savefig(f'{img_name}.png')
+        plt.savefig(f'{img_name}')
         plt.close()
+    with open(res_tbl, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+    with open(res_tbl, 'w', encoding='utf-8') as f:
+        for line in lines:
+            if line.startswith('|'):
+                f.write(line)
+        for img in imgs:
+            f.write(f'\n![{img}]({imgs[img]})')

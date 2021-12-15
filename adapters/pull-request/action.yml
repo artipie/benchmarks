@@ -15,7 +15,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v2.3.3
     - name: Create pull request
       uses: repo-sync/pull-request@v2
       with:

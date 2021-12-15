@@ -1,0 +1,36 @@
+name: 'benchmarks-action'
+description: 'Run Artipie Benchmarks Github action'
+inputs:
+  target:
+    description: 'Name of repository (keys from adapters/benchmarks.json)'
+    required: true
+  tag:
+    description: 'Release tag for which benchmarks will be run'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Set env
+      shell: bash
+      run: |
+        echo "http_proxy=http://localhost:3128" >> $GITHUB_ENV
+        echo "https_proxy=http://localhost:3128" >> $GITHUB_ENV
+    - name: Run target benchmark
+      shell: bash
+      run: |
+        git clone https://github.com/artipie/benchmarks.git tmp-bench
+        cd tmp-bench/adapters
+        make draw-charts TARGET=${{ inputs.target }} TAG=${{ inputs.tag }}
+        cd ../..
+        rm -rf tmp-bench
+    - name: Set user and fetch
+      shell: bash
+      run: |
+        git config --global user.name "github-action"
+        git config --global user.email "benchmarks@artipie.com"
+        git add .
+        git fetch origin
+        git switch -C master origin/master
+        git checkout -b bench-${{ inputs.tag }}
+        git commit -m "bench: added results of benchmarks for ${{ inputs.tag }}"
+        git push origin HEAD:bench-${{ inputs.tag }}

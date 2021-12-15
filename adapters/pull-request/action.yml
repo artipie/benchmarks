@@ -1,0 +1,28 @@
+name: 'pull-request'
+description: 'Create pull request with benchmarks results'
+inputs:
+  tag:
+    description: 'Release tag for which benchmarks were run'
+    required: true
+  reviewer:
+    description: 'Person who should approve the created PR'
+    required: false
+    default: genryxy
+  assignee:
+    description: 'Person to whom the created PR will be assigned'
+    required: false
+    default: genryxy
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2.3.3
+    - name: Create pull request
+      uses: repo-sync/pull-request@v2
+      with:
+        source_branch: "bench-${{ inputs.tag }}"
+        destination_branch: "master"
+        pr_title: "bench: adding results of benchmarks for ${{ inputs.tag }}"
+        pr_reviewer: "${{ inputs.reviewer }}"
+        pr_assignee: "${{ inputs.assignee }}"
+        pr_label: "benchmarks-results"
+        github_token: ${{ secrets.GITHUB_TOKEN }}

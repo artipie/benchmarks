@@ -4,6 +4,9 @@ inputs:
   tag:
     description: 'Release tag for which benchmarks were run'
     required: true
+  token:
+    description: 'Github token'
+    required: true
   reviewer:
     description: 'Person who should approve the created PR'
     required: false
@@ -24,4 +27,4 @@ runs:
         pr_reviewer: "${{ inputs.reviewer }}"
         pr_assignee: "${{ inputs.assignee }}"
         pr_label: "benchmarks-results"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: "${{ inputs.token }}"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.2.1">
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.3">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Upload files" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -10,7 +10,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="duration" elementType="Argument">
             <stringProp name="Argument.name">duration</stringProp>
-            <stringProp name="Argument.value">${__P(duration,300)}</stringProp>
+            <stringProp name="Argument.value">${__P(duration,30)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="users.small" elementType="Argument">
@@ -185,7 +185,7 @@ vars.putObject(&quot;payload&quot;, payload.encodeBase64().toString());</stringP
           <stringProp name="HTTPSampler.port">${repository.port}</stringProp>
           <stringProp name="HTTPSampler.protocol">${repository.schema}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">${repository.path}/small/${requestNum}</stringProp>
+          <stringProp name="HTTPSampler.path">upload/small/${requestNum}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -245,7 +245,7 @@ vars.putObject(&quot;payload&quot;, payload.encodeBase64().toString());</stringP
           <stringProp name="HTTPSampler.port">${repository.port}</stringProp>
           <stringProp name="HTTPSampler.protocol">${repository.schema}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">${repository.path}/medium/${requestNum}</stringProp>
+          <stringProp name="HTTPSampler.path">upload/medium/${requestNum}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -306,7 +306,7 @@ vars.putObject(&quot;payload&quot;, payload.encodeBase64().toString());</stringP
           <stringProp name="HTTPSampler.port">${repository.port}</stringProp>
           <stringProp name="HTTPSampler.protocol">${repository.schema}</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">${repository.path}/large/${requestNum}</stringProp>
+          <stringProp name="HTTPSampler.path">upload/large/${requestNum}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

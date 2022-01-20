@@ -1,6 +1,6 @@
 /*
  * The MIT License (MIT) Copyright (c) 2020-2022 artipie.com
- * https://github.com/artipie/benchmarks/blob/master/spring-file/LICENCE.header
+ * https://github.com/artipie/benchmarks/blob/master/spring-file/LICENCE.txt
  */
 package com.artipie.spring;
 
@@ -69,7 +69,7 @@ public final class DataControllerTest {
     @Test
     public void uploadsBinaryData() throws Exception {
         this.mock.perform(
-            MockMvcRequestBuilders.put("/upload/bin")
+            MockMvcRequestBuilders.put("/upload/small/bin")
                 .content("some binary data for upload to the server")
                 .characterEncoding("UTF-8")
         ).andExpect(MockMvcResultMatchers.status().isCreated());
@@ -84,7 +84,7 @@ public final class DataControllerTest {
             }
         );
         MatcherAssert.assertThat(
-            this.controller.uploadData("bin", request).getStatusCode().is5xxServerError(),
+            this.controller.uploadData("small", "bin", request).getStatusCode().is5xxServerError(),
             new IsEqual<>(true)
         );
     }

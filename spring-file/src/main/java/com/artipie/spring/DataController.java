@@ -1,6 +1,6 @@
 /*
  * The MIT License (MIT) Copyright (c) 2020-2022 artipie.com
- * https://github.com/artipie/benchmarks/blob/master/spring-file/LICENCE.header
+ * https://github.com/artipie/benchmarks/blob/master/spring-file/LICENCE.txt
  */
 package com.artipie.spring;
 
@@ -42,22 +42,26 @@ public final class DataController {
 
     /**
      * Upload binary data by specified key.
+     * @param type Type of jmx test
      * @param key Key to data
      * @param request Request with binary data
      * @return Response
      */
-    @PutMapping(value = "upload/{key}", consumes = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @PutMapping(value = "upload/{type}/{key}", consumes = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<String> uploadData(
-        final @PathVariable("key") String key, final HttpServletRequest request
+        final @PathVariable("type") String type,
+        final @PathVariable("key") String key,
+        final HttpServletRequest request
     ) {
         ResponseEntity<String> res;
+        final String name = String.format("%s.%s", type, key);
         try {
-            this.dataservice.save(request.getInputStream(), key);
+            this.dataservice.save(request.getInputStream(), name);
             res = ResponseEntity.status(HttpStatus.CREATED)
-                .body(String.format("Uploaded by key '%s'", key));
+                .body(String.format("Uploaded by key '%s'", name));
         } catch (final UncheckedIOException | IOException exc) {
             res = ResponseEntity.internalServerError()
-                .body(String.format("Failed to upload by key '%s'", key));
+                .body(String.format("Failed to upload by key '%s'", name));
         }
         return res;
     }

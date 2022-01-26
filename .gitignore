@@ -8,6 +8,6 @@ aws-infrastructure/aws_ssh_key
 aws-infrastructure/aws_ssh_key.pub
 aws-infrastructure/.terraform.tfstate.lock.info
 aws-infrastructure/instance-env.sh
-spring-file/target
-spring-file/*.iml
+*-file/target
+*-file/*.iml
 *.json

@@ -1,11 +1,18 @@
-<img src="https://www.artipie.com/logo.svg" width="64px" height="64px"/>
+<a href="http://artipie.com"><img src="https://www.artipie.com/logo.svg" width="64px" height="64px"/></a>
 
-[![Build Status](https://img.shields.io/travis/artipie/benchmarks/master.svg)](https://travis-ci.org/artipie/benchmarks)
-[![Javadoc](http://www.javadoc.io/badge/com.artipie/benchmarks.svg)](http://www.javadoc.io/doc/com.artipie/benchmarks)
+[![Join our Telegramm group](https://img.shields.io/badge/Join%20us-Telegram-blue?&logo=telegram&?link=http://right&link=http://t.me/artipie)](http://t.me/artipie)
+
+[![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
+[![DevOps By Rultor.com](http://www.rultor.com/b/artipie/benchmarks)](http://www.rultor.com/p/artipie/http)
+[![We recommend IntelliJ IDEA](https://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
+
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/artipie/benchmarks/blob/master/LICENSE.txt)
 [![Hits-of-Code](https://hitsofcode.com/github/artipie/benchmarks)](https://hitsofcode.com/view/github/artipie/benchmarks)
-[![Maven Central](https://img.shields.io/maven-central/v/com.artipie/benchmarks.svg)](https://maven-badges.herokuapp.com/maven-central/com.artipie/benchmarks)
 [![PDD status](http://www.0pdd.com/svg?name=artipie/benchmarks)](http://www.0pdd.com/p?name=artipie/benchmarks)
+
+If you have any question or suggestions, do not hesitate to [create an issue](https://github.com/artipie/benchmarks/issues/new) or contact us in
+[Telegram](https://t.me/artipie).  
+Artipie [roadmap](https://github.com/orgs/artipie/projects/3).
 
 # Benchmarks for Artipie repositories.
 

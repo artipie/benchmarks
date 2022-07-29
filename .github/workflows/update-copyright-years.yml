@@ -18,7 +18,6 @@ jobs:
             **/LICENSE*
             src/**/*.java
             src/**/*.rb
-            **/*.py
             **/*.xml
             .release/*
           commitTitle: "chore: update license year"

@@ -1,0 +1,11 @@
+repo:
+  url: "http://localhost:8080/npmtest"
+  type: npm
+  storage: default
+  permissions:
+    ChGen:
+      - "upload"
+      - "download"
+    "*":
+      - "download"
+      - "upload"

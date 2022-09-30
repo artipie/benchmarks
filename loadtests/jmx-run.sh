@@ -17,10 +17,7 @@ rm -rf artipie-upload-res
 rm -f artipie-upload.log
 mkdir artipie-upload-res
 
-sleep 2
-
 echo "Run jmeter tests"
 "$jmeter" -n -t ./upload-files.jmx -l ./artipie-upload.log -e -o ./artipie-upload-res -Jrepository.host="$host" -Jrepository.port="$port" \
   -Jrepository.path=/ChGen/bintest/ -Jduration="$duration"
-mv -f artipie-upload-res "upload-test-$duration-$(date +%y-%m-%d_%H-%M-%S)"
-
+mv -f artipie-upload-res "test_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"

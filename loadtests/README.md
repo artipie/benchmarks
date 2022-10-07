@@ -14,3 +14,6 @@ For now using the following version of JMeter:
  - `jmeterReport.sh` allows to generate report files for given JMeter jmx file.
  - `Dockerfile.client` allows to run for recording `conan install` command with given Conan server URL and JMeter proxy URL
 
+# Downloading via proxy (JMeter)
+time mvn clean install -Dhttp.proxyHost=localhost -Dhttp.proxyPort=8888 -Dhttps.proxyHost=localhost -Dhttps.proxyPort=8888 -Dmaven.wagon.http.ssl.insecure=true -Dmaven.test.skip -Ddockerfile.skip=true
+

@@ -1,3 +1,5 @@
 permissions:
   artipie:
     - api
+  ChGen:
+    - api

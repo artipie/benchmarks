@@ -40,7 +40,7 @@
           </elementProp>
           <elementProp name="src.path" elementType="Argument">
             <stringProp name="Argument.name">src.path</stringProp>
-            <stringProp name="Argument.value">${__P(src.path,upload-maven-src)}</stringProp>
+            <stringProp name="Argument.value">${__P(src.path,upload-maven-src/repository)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="src.list" elementType="Argument">

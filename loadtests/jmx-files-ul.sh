@@ -19,8 +19,8 @@ mkdir artipie-upload-res
 
 echo "Run jmeter tests"
 # -e -o ./artipie-upload-res
-"$jmeter" -n -t ./upload-mvn-proxy.jmx -l ./artipie-upload.log  -Jrepository.host="$host" -Jrepository.port="$port" \
-  -Jrepository.path=/ChGen/maventest/ -Jduration="$duration"
+"$jmeter" -n -t ./upload-files.jmx -l ./artipie-upload.log -e -o ./artipie-upload-res -Jrepository.host="$host" -Jrepository.port="$port" \
+  -Jrepository.path=/chgen/bintest/ -Jduration="$duration"
 mv -f artipie-upload.log artipie-upload-res
-mv -f artipie-upload-res "test_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"
+mv -f artipie-upload-res "files_ul_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"
 

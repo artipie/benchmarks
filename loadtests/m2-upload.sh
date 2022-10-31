@@ -11,7 +11,7 @@ fi
 cd "$1/repository"
 pwd
 # /home/evgeny/bin/maven-mvnd-0.8.2-linux-amd64/bin/mvnd.sh
-# -s /home/evgeny/w/artipie/benchmarks/loadtests/m2-proxy.xml
+# -s /home/evgeny/w/artipie/benchmarks/loadtests/m2-local.xml
 #find . -type f \( -name "*.jar" -o -name "*.sha1" -o -name "*.pom" \) -exec curl -v -T {} "$url/{}" \;
 rm -fv mlog.log
 find . -type f -name "*.jar"|xargs -d'\n' -n1 bash -c '

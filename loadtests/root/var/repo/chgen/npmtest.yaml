@@ -1,8 +1,9 @@
 repo:
-  type: file
+  url: "http://localhost:8080/npmtest"
+  type: npm
   storage: default
   permissions:
-    ChGen:
+    chgen:
       - "upload"
       - "download"
     "*":

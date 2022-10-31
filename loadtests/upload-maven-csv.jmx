@@ -35,7 +35,7 @@
           </elementProp>
           <elementProp name="repository.path" elementType="Argument">
             <stringProp name="Argument.name">repository.path</stringProp>
-            <stringProp name="Argument.value">${__P(repository.path,ChGen/maventest)}</stringProp>
+            <stringProp name="Argument.value">${__P(repository.path,chgen/maventest)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="src.path" elementType="Argument">

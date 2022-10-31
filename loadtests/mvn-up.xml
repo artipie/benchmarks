@@ -13,7 +13,7 @@
 				<repository>
 				<id>test-repo</id>
 				<name>Test repo</name>
-				<url>http://localhost:8081/ChGen/maventest</url>
+				<url>http://localhost:8081/chgen/maventest</url>
 				</repository>
 			</repositories>
 		</profile>

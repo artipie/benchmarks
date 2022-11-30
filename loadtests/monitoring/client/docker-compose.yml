@@ -1,0 +1,37 @@
+---
+version: "3.7"
+services:
+  prometheus:
+    image: prom/prometheus:v2.39.1
+    volumes:
+      - ./conf/:/etc/prometheus/
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.config.file=/etc/prometheus/web.yml
+    ports:
+      - "9090:9090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  artipie-test:
+    image: artipie/artipie:v0.27.6
+    volumes:
+      - "./artipie/etc:/etc/artipie"
+      - "./artipie/var:/var/artipie"
+    user: $ARTIPIE_USER
+    environment:
+      - JVM_ARGS=
+        -javaagent:/etc/artipie/jmx_prometheus_javaagent-0.17.2.jar=${JMX_AGENT}:/etc/artipie/jmx-agent.yml 
+        -agentlib:jdwp=transport=dt_socket,server=y,address=*:${JDEBUG},suspend=n -Djava.rmi.server.hostname=localhost 
+        -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=${JMX_PORT} 
+        -Dcom.sun.management.jmxremote.rmi.port=${JMX_PORT} -Dcom.sun.management.jmxremote.local.only=false 
+        -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
+    ports:
+      - "8080:8080"
+      - "8087:8087" #vertx metrics
+      - "${JDEBUG}:${JDEBUG}"
+      - "${JMX_PORT}:${JMX_PORT}"
+      - "${JMX_AGENT}:${JMX_AGENT}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    #profiles:
+    #  - dontstart

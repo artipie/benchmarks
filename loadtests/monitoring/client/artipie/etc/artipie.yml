@@ -1,0 +1,30 @@
+meta:
+  storage:
+    type: fs
+    path: /var/artipie/repo
+  credentials:
+    -
+      type: env
+    -
+      type: github
+    -
+      type: file
+      path: _credentials.yaml
+  layout: org
+  base_url: http://central.artipie.com/
+  metrics:
+    -
+      type: log
+      interval: 5
+    -
+      type: asto
+      interval: 5 
+      storage:
+        type: fs
+        path: /etc/artipie/artipie-metrics.log
+    -
+      type: prometheus # http://{host}:{port}/prometheus/metrics
+    - 
+      type: vertx
+      endpoint: "/metrics"
+      port: 8087

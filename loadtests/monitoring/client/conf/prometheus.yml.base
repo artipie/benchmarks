@@ -18,19 +18,11 @@ rule_files:
   # - "first_rules.yml"
   # - "second_rules.yml"
 
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
 scrape_configs:
-  - job_name: "artipie_jvm_metrics"
-    static_configs:
-      - targets: ["host.docker.internal:12345"]
   - job_name: "artipie_metrics"
     static_configs:
-      - targets: ["host.docker.internal:8080"]
-    metrics_path: "/prometheus/metrics"
-  - job_name: "artipie_vertx_metrics"
-    static_configs:
       - targets: ["host.docker.internal:8087"]
+    metrics_path: "/artipie/metrics"
 
 remote_write:
   # - url: "http://host.docker.internal:1234/receive" #telegraf

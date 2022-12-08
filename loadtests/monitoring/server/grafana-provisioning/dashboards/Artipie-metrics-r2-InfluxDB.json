@@ -109,10 +109,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -196,10 +193,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -308,10 +302,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -395,10 +386,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -482,10 +470,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -569,10 +554,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -656,10 +638,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -743,10 +722,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -830,10 +806,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -918,10 +891,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1005,10 +975,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1092,10 +1059,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1179,10 +1143,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1266,10 +1227,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1353,10 +1311,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1440,10 +1395,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {

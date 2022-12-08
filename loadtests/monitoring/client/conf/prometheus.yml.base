@@ -25,5 +25,7 @@ scrape_configs:
     metrics_path: "/artipie/metrics"
 
 remote_write:
-  # - url: "http://host.docker.internal:1234/receive" #telegraf
-    #basic_auth:
+  # - url: "http://host.docker.internal:1234/receive" # example, see prometheus.yml.base
+  #  basic_auth:
+  #    username: admin
+  #    password: telegrafadmin1

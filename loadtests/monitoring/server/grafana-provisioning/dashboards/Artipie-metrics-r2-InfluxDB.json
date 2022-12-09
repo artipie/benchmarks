@@ -109,7 +109,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -158,7 +161,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -185,15 +189,18 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_response_body_size_bytes/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_response_body_size_bytes_sum\")\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_request_body_size_bytes",
+      "title": "Response body size and chunks",
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -242,34 +249,10 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "none"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "artipie_response_body_size_bytes_count {host=\"d1a9d2479edd\", instance=\"host.docker.internal:8087\", job=\"artipie_metrics\", method=\"GET\", monitor=\"artipie\", route=\"/chgen/bintest/upload/medium/1\"}"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -277,7 +260,7 @@
         "x": 0,
         "y": 8
       },
-      "id": 7,
+      "id": 8,
       "options": {
         "legend": {
           "calcs": [],
@@ -294,15 +277,18 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_response_body_size_bytes/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_request_counter_total\")\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_response_body_size_bytes",
+      "title": "HTTP requests counter",
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -351,7 +337,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -378,7 +365,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_response_send_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_response_send_seconds_max\")\r\n",
           "refId": "A"
         }
       ],
@@ -386,7 +373,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -435,7 +425,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -445,7 +436,7 @@
         "x": 0,
         "y": 16
       },
-      "id": 8,
+      "id": 16,
       "options": {
         "legend": {
           "calcs": [],
@@ -462,15 +453,18 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_request_counter_total/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_connection_accept_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_request_counter_total",
+      "title": "artipie_connection_accept_seconds",
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -519,7 +513,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -546,7 +541,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_slice_response_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_slice_response_seconds_max\")\r\n",
           "refId": "A"
         }
       ],
@@ -554,7 +549,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -603,7 +601,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -613,7 +612,7 @@
         "x": 0,
         "y": 24
       },
-      "id": 16,
+      "id": 17,
       "options": {
         "legend": {
           "calcs": [],
@@ -630,15 +629,18 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_connection_accept_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_value_seconds_max\")\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_connection_accept_seconds",
+      "title": "artipie_storage_value_seconds",
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -687,7 +689,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -714,7 +717,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_save_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_save_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -722,7 +725,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -771,7 +777,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -781,7 +788,7 @@
         "x": 0,
         "y": 32
       },
-      "id": 17,
+      "id": 14,
       "options": {
         "legend": {
           "calcs": [],
@@ -798,15 +805,18 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_value_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_value_size_bytes_max\")\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_value_seconds",
+      "title": "Storage content body size and chunks",
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -856,7 +866,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -883,7 +894,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_exists_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_exists_seconds_max\")\r\n",
           "refId": "A"
         }
       ],
@@ -891,7 +902,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -940,7 +954,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -950,7 +965,7 @@
         "x": 0,
         "y": 40
       },
-      "id": 14,
+      "id": 20,
       "options": {
         "legend": {
           "calcs": [],
@@ -967,15 +982,18 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_value_size_bytes/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_move_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_value_size_bytes",
+      "title": "artipie_storage_move_seconds",
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1024,7 +1042,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -1051,7 +1070,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_list_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_list_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -1059,7 +1078,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1108,7 +1130,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -1118,7 +1141,7 @@
         "x": 0,
         "y": 48
       },
-      "id": 20,
+      "id": 22,
       "options": {
         "legend": {
           "calcs": [],
@@ -1135,15 +1158,18 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_move_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_delete_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_move_seconds",
+      "title": "artipie_storage_delete_seconds",
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1192,7 +1218,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -1219,7 +1246,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_metadata_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_metadata_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -1227,7 +1254,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1276,7 +1306,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -1286,7 +1317,7 @@
         "x": 0,
         "y": 56
       },
-      "id": 22,
+      "id": 24,
       "options": {
         "legend": {
           "calcs": [],
@@ -1303,15 +1334,18 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_delete_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_exclusively_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_delete_seconds",
+      "title": "artipie_storage_exclusively_seconds",
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1360,7 +1394,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -1387,95 +1422,11 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_deleteAll_seconds/)\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_deleteAll_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
       "title": "artipie_storage_deleteAll_seconds",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "InfluxDB_v2_Flux",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 30,
-            "gradientMode": "opacity",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 2,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 64
-      },
-      "id": 24,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "9.2.4",
-      "targets": [
-        {
-          "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field =~ /artipie_storage_exclusively_seconds/)\r\n",
-          "refId": "A"
-        }
-      ],
-      "title": "artipie_storage_exclusively_seconds",
       "type": "timeseries"
     }
   ],
@@ -1494,6 +1445,6 @@
   "timezone": "",
   "title": "Artipie metrics r2 (InfluxDB)",
   "uid": "vp-ecxd4l",
-  "version": 2,
+  "version": 5,
   "weekStart": ""
 }

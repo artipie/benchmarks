@@ -26,10 +26,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -67,10 +64,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -150,10 +144,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "unit": "decbytes"
@@ -197,10 +188,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -280,10 +268,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -321,10 +306,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -404,10 +386,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -445,10 +424,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -528,10 +504,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -569,10 +542,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -652,10 +622,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -693,10 +660,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -776,10 +740,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -817,10 +778,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -900,10 +858,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -941,10 +896,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -1024,10 +976,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1065,10 +1014,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -1148,10 +1094,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1189,10 +1132,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -1272,10 +1212,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1313,10 +1250,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -1396,10 +1330,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1437,10 +1368,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -1520,10 +1448,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1561,10 +1486,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",
@@ -1644,10 +1566,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1685,10 +1604,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P5697886F9CA74929"
-          },
+          "datasource": "InfluxDB_v2_Flux",
           "dsType": "influxdb",
           "expr": "vertx_http_server_connections",
           "format": "time_series",

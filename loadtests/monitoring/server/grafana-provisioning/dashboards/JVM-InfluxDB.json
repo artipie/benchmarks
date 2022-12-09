@@ -28,10 +28,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -54,10 +51,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -197,10 +191,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -336,10 +327,7 @@
       }
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -483,10 +471,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -626,10 +611,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -769,10 +751,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -909,10 +888,7 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -935,10 +911,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -1083,10 +1056,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -1231,10 +1201,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -1379,10 +1346,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -1527,10 +1491,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -1675,10 +1636,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -1820,10 +1778,7 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1846,10 +1801,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -1994,10 +1946,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -2142,10 +2091,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -2290,10 +2236,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -2435,10 +2378,7 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2461,10 +2401,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -2609,10 +2546,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -2841,8 +2775,8 @@
     ]
   },
   "time": {
-    "from": "2022-12-09T10:39:00.571Z",
-    "to": "2022-12-09T10:42:40.199Z"
+    "from": "now-1h",
+    "to": "now"
   },
   "timepicker": {
     "hidden": false,

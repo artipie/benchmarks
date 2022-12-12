@@ -4,12 +4,12 @@ meta:
     path: /var/artipie/repo
   credentials:
     -
-      type: env
+      type: file
+      path: _credentials.yaml
     -
       type: github
     -
-      type: file
-      path: _credentials.yaml
+      type: env
   layout: org
   metrics:
     endpoint: "/artipie/metrics"

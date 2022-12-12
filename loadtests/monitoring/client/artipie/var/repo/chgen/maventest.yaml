@@ -2,7 +2,7 @@ repo:
   type: maven
   storage: default
   permissions:
-    '*':
+    "*":
       - "download"
       - "upload"
       - "write"

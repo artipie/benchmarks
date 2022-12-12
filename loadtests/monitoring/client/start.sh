@@ -2,6 +2,7 @@
 if [ $# -ne 3 ]; then
     echo "Usage: $0 telegraf_hostname username password" && exit 1
 fi
+docker-compose down || :
 docker-compose rm -s -f
 rm -fv conf/prometheus.yml 
 cp -fv conf/prometheus.yml.base conf/prometheus.yml

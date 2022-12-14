@@ -275,11 +275,14 @@
           "refId": "A"
         }
       ],
-      "title": "HTTP requests counter",
+      "title": "Requests counter",
       "type": "timeseries"
     },
     {
-      "datasource": "InfluxDB_v2_Flux",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P5697886F9CA74929"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -329,7 +332,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "decbytes"
         },
         "overrides": []
       },
@@ -339,7 +342,7 @@
         "x": 12,
         "y": 8
       },
-      "id": 13,
+      "id": 25,
       "options": {
         "legend": {
           "calcs": [],
@@ -356,11 +359,11 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_response_send_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_request_body_size_bytes_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_response_send_seconds",
+      "title": "Request body size and chunks",
       "type": "timeseries"
     },
     {
@@ -445,7 +448,7 @@
           "refId": "A"
         }
       ],
-      "title": "artipie_connection_accept_seconds",
+      "title": "Connection.accept execution time",
       "type": "timeseries"
     },
     {
@@ -509,7 +512,7 @@
         "x": 12,
         "y": 16
       },
-      "id": 4,
+      "id": 13,
       "options": {
         "legend": {
           "calcs": [],
@@ -526,11 +529,11 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_slice_response_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_response_send_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_slice_response_seconds",
+      "title": "Response.send execution time",
       "type": "timeseries"
     },
     {
@@ -615,7 +618,7 @@
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_value_seconds",
+      "title": "Time to read value from storage",
       "type": "timeseries"
     },
     {
@@ -679,7 +682,7 @@
         "x": 12,
         "y": 24
       },
-      "id": 18,
+      "id": 4,
       "options": {
         "legend": {
           "calcs": [],
@@ -696,11 +699,11 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_save_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_slice_response_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_save_seconds",
+      "title": "Slice.response execution time",
       "type": "timeseries"
     },
     {
@@ -785,12 +788,11 @@
           "refId": "A"
         }
       ],
-      "title": "Storage content body size and chunks",
+      "title": "Storage value size and chunks",
       "type": "timeseries"
     },
     {
       "datasource": "InfluxDB_v2_Flux",
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -803,15 +805,15 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
+            "fillOpacity": 30,
+            "gradientMode": "opacity",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineWidth": 1,
+            "lineWidth": 2,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -845,12 +847,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 11,
+        "h": 8,
+        "w": 12,
         "x": 12,
         "y": 32
       },
-      "id": 2,
+      "id": 18,
       "options": {
         "legend": {
           "calcs": [],
@@ -867,11 +869,11 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_exists_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_save_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()",
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_exists_seconds",
+      "title": "Time to save storage value",
       "type": "timeseries"
     },
     {
@@ -956,11 +958,12 @@
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_move_seconds",
+      "title": "Storage move operation time",
       "type": "timeseries"
     },
     {
       "datasource": "InfluxDB_v2_Flux",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -973,15 +976,15 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 30,
-            "gradientMode": "opacity",
+            "fillOpacity": 0,
+            "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineWidth": 2,
+            "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1015,12 +1018,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 9,
+        "w": 11,
         "x": 12,
-        "y": 41
+        "y": 40
       },
-      "id": 15,
+      "id": 2,
       "options": {
         "legend": {
           "calcs": [],
@@ -1037,11 +1040,11 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_list_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_exists_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_list_seconds",
+      "title": "Storage exists operation time",
       "type": "timeseries"
     },
     {
@@ -1126,7 +1129,7 @@
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_delete_seconds",
+      "title": "Storage delete operation time",
       "type": "timeseries"
     },
     {
@@ -1190,7 +1193,7 @@
         "x": 12,
         "y": 49
       },
-      "id": 21,
+      "id": 15,
       "options": {
         "legend": {
           "calcs": [],
@@ -1207,11 +1210,11 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_metadata_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_list_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_metadata_seconds",
+      "title": "Storage list operation time",
       "type": "timeseries"
     },
     {
@@ -1296,7 +1299,7 @@
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_exclusively_seconds",
+      "title": "Storage exclusively operation seconds",
       "type": "timeseries"
     },
     {
@@ -1360,6 +1363,91 @@
         "x": 12,
         "y": 57
       },
+      "id": 21,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": "InfluxDB_v2_Flux",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_metadata_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Storage metadata operation time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "InfluxDB_v2_Flux",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 30,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 65
+      },
       "id": 23,
       "options": {
         "legend": {
@@ -1381,7 +1469,7 @@
           "refId": "A"
         }
       ],
-      "title": "artipie_storage_deleteAll_seconds",
+      "title": "Storage deleteAll operation seconds",
       "type": "timeseries"
     }
   ],
@@ -1393,13 +1481,13 @@
     "list": []
   },
   "time": {
-    "from": "now-2m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Artipie metrics r2 (InfluxDB)",
   "uid": "vp-ecxd4l",
-  "version": 1,
+  "version": 19,
   "weekStart": ""
 }

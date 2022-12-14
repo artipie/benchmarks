@@ -279,10 +279,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P5697886F9CA74929"
-      },
+      "datasource": "InfluxDB_v2_Flux",
       "fieldConfig": {
         "defaults": {
           "color": {

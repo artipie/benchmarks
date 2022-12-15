@@ -13,7 +13,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
   artipie-test:
-    image: chgena/artipie:bc37982.1
+    image: artipie/artipie:v0.27.9
     volumes:
       - "./artipie/etc:/etc/artipie"
       - "./artipie/var:/var/artipie"

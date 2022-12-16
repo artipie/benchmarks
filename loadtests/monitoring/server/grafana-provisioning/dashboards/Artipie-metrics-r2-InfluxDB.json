@@ -186,7 +186,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_response_body_size_bytes_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_response_body_size_bytes_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -271,7 +271,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_request_counter_total\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_request_counter_total\")\r\n",
           "refId": "A"
         }
       ],
@@ -356,7 +356,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_request_body_size_bytes_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_request_body_size_bytes_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -441,7 +441,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_connection_accept_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_connection_accept_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -526,7 +526,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_response_send_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_response_send_seconds_max\")\r\n",
           "refId": "A"
         }
       ],
@@ -611,7 +611,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_value_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_value_seconds_max\")",
           "refId": "A"
         }
       ],
@@ -696,7 +696,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_slice_response_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_slice_response_seconds_max\")\r\n",
           "refId": "A"
         }
       ],
@@ -781,7 +781,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_value_size_bytes_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_value_size_bytes_max\")\r\n",
           "refId": "A"
         }
       ],
@@ -866,7 +866,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_save_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_save_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -1037,7 +1037,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_exists_seconds_max\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_exists_seconds_max\")\r\n",
           "refId": "A"
         }
       ],
@@ -1207,7 +1207,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_list_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_list_seconds_sum\")\r\n ",
           "refId": "A"
         }
       ],
@@ -1292,7 +1292,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_exclusively_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_exclusively_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -1377,7 +1377,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_metadata_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_metadata_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -1462,7 +1462,7 @@
       "targets": [
         {
           "datasource": "InfluxDB_v2_Flux",
-          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_deleteAll_seconds_sum\")\r\n  |> group(columns: [\"_time\"])\r\n  |> mean(column: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r._value}))\r\n  |> group()\r\n",
+          "query": "from(bucket: v.bucket)\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r.job == \"artipie_metrics\" and r._field == \"artipie_storage_deleteAll_seconds_sum\")\r\n",
           "refId": "A"
         }
       ],
@@ -1485,6 +1485,6 @@
   "timezone": "",
   "title": "Artipie metrics r2 (InfluxDB)",
   "uid": "vp-ecxd4l",
-  "version": 19,
+  "version": 1,
   "weekStart": ""
 }

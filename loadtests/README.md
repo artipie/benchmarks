@@ -30,12 +30,8 @@ Most scripts rely on JMeter 5.5 and were tested inside Linux with native Docker 
 - `jmx-files-ul.sh` upload random binary data files, like `jmx-run.sh`
 - `jmx-files-ul.sh` download files by list, generated for upload script above
 - `maven-repo-reset.sh` reset & wipe data for maven repository via Artipie REST API, for tests
+- `bintest-repo-reset.sh` reset & wipe data for binary files repository via Artipie REST API, for tests
 - `monitoring/*` monitoring support for artipie, which consist of two parts, see `README.md` there.
-
-## Downloading maven artifacts via proxy (JMeter)
-```
-time mvn clean install -Dhttp.proxyHost=localhost -Dhttp.proxyPort=8888 -Dhttps.proxyHost=localhost -Dhttps.proxyPort=8888 -Dmaven.wagon.http.ssl.insecure=true -Dmaven.test.skip -Ddockerfile.skip=true
-```
 
 ## How to run tests locally
 1. Setup Ubuntu 22.04 environment with dependencies: `sudo apt install curl openjdk-17-jdk docker.io`
@@ -46,3 +42,12 @@ time mvn clean install -Dhttp.proxyHost=localhost -Dhttp.proxyPort=8888 -Dhttps.
 6. Check html report in test results directory: `test_*/index.html`
 7. Do extra test and compare json output for two test results: `test_*/statistics.json`
 8. Stop artipie testing instance: `docker stop artipie`
+
+## Downloading maven artifacts via JMeter proxy
+1. Run Apache JMeter in GUI mode
+2. Open project, and add new element: `Edit->Add->Non-test elements->HTTPS test script recorder`
+3. For this element, set `Global settings->Port` to `8888` and press Start.
+4. Use command below to download artifacts via this proxy:
+```
+time mvn clean install -Dhttp.proxyHost=localhost -Dhttp.proxyPort=8888 -Dhttps.proxyHost=localhost -Dhttps.proxyPort=8888 -Dmaven.wagon.http.ssl.insecure=true -Dmaven.test.skip -Ddockerfile.skip=true
+```

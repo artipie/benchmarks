@@ -1,0 +1,30 @@
+meta:
+  storage:
+    type: fs
+    path: /var/artipie/repo
+  credentials:
+    -
+      type: env
+    -
+      type: github
+    -
+      type: file
+      path: _credentials.yaml
+  layout: org
+  base_url: http://central.artipie.com/
+  metrics:
+    -
+      type: log
+      interval: 5
+    -
+      type: asto # Metrics type, `asto` to publish statistics into storage
+      interval: 5 
+      storage:
+        type: fs
+        path: /etc/artipie/artipie-metrics.log
+    -   # http://{host}:{port}/prometheus/metrics
+      type: prometheus
+    - 
+      type: vertx # Metrics type, `vertx` for Vert.x metrics
+      endpoint: "/metrics" # Path of the endpoint, starting with `/`, where the metrics will be served
+      port: 8087 # Port to serve the metrics

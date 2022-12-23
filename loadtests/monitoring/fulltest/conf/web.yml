@@ -1,0 +1,3 @@
+basic_auth_users:
+    admin: $2y$10$YB4OFTTMzg/9nUsAq1TxMer1HvQaD5JavTSMnTpSeaDiKFYFFvuGG # htpasswd -nbBC 10 admin admin
+

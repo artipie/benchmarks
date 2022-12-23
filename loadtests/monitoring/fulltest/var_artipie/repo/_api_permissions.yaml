@@ -1,0 +1,10 @@
+endpoints:
+  ".*":
+    ".*":
+      - god
+
+users:
+  artipie:
+    - god
+  chgen:
+    - god

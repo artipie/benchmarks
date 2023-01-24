@@ -2,9 +2,10 @@ repo:
   type: file
   storage: default
   permissions:
-    '*':
-      - download
-      - upload
-      - write
-      - publish
-      - deploy
+    "*":
+      - "download"
+      - "upload"
+      - "write"
+      - "publish"
+      - "deploy"
+

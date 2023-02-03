@@ -25,10 +25,10 @@ services:
         -Dcom.sun.management.jmxremote.rmi.port=${JMX_PORT} -Dcom.sun.management.jmxremote.local.only=false 
         -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
     ports:
-      - "8080:8080"
+      - "8080:8080" #Main repository endpoint
       - "8087:8087" #New Artipie metrics
-      - "${JDEBUG}:${JDEBUG}"
-      - "${JMX_PORT}:${JMX_PORT}"
+      - "${JDEBUG}:${JDEBUG}" #Java remote debugger port. See `.env` file
+      - "${JMX_PORT}:${JMX_PORT}" #JMX/JFR remote tools
     extra_hosts:
       - "host.docker.internal:host-gateway"
     #profiles:

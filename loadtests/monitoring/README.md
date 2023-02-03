@@ -5,7 +5,8 @@ Docker compose with monitoring configurations tests. Available subdirectories:
 - `fulltest` - client+server, could be used for testing purposes.
 
 ## Run server
-Server provides Grafana WEB UI, InfluxDB2 is used for permanent storage and Telegraf for metrics collection.
+Server provides Grafana WEB UI, InfluxDB2 is used for permanent storage and Telegraf for metrics collection. 
+Some of the common values are set in `.env` files.
 ```
 cd server
 docker-compose up --abort-on-container-exit

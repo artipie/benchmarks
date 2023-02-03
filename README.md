@@ -82,6 +82,14 @@ is represented by complex scenario with several simultaneous different actions.
    download/upload rate 100:1 and higher. This role not heavy depends on latency, but
    repository should support a lot of simultaneous clients in this role.
 
+## Initial setup
+
+Initial setup is mandatory part for every test scenario. Empty repositories could not be
+representative for the tests so we need to fill up them in the beginning. The best way
+for hosted repositories is to import some existing repository for it. The good way for
+proxy repository - to build a number of popular projects to fill it (the best way is
+still import existing data if you have it).
+
 ##  Performance testing
 
 Currently basic performance testing could be done for maven and binary files adapters. Scripts rely on docker and jmeter tools. More details are in [loadtests/README.md](loadtests/README.md)
@@ -89,3 +97,8 @@ Currently basic performance testing could be done for maven and binary files ada
 ## Performance Monitoring
 
 Performance monitoring configuration provides Grafana dashboards and based on docker compose, see [loadtests/monitoring/README.md](loadtests/monitoring/README.md)
+
+## Performance and load testing
+
+Currently we implemented [scenarios](#scenarios) for stress tests of private repositories with types `maven` and `files`. See [loadtests/](loadtests/README.md)
+

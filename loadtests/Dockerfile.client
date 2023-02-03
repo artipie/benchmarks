@@ -1,0 +1,16 @@
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update -y -o APT::Update::Error-Mode=any && apt install -y --no-install-recommends g++ cmake make openjdk-17-jre-headless python3-pip && \
+    apt autoremove -y && apt clean
+#COPY apache-jmeter-5.5 /opt
+RUN pip3 install -U pip setuptools
+RUN pip3 install -U conan==1.50.0
+RUN conan profile new --detect default
+RUN conan profile update settings.compiler.libcxx=libstdc++11 default
+RUN conan remote add -f localtest "http://localhost:9300" False
+COPY conanfile.txt conan.sh /root
+WORKDIR /root
+RUN pwd
+RUN ls -lah /root
+ENTRYPOINT [ "/root/conan.sh" ]
+

@@ -1,0 +1,4 @@
+# java -javaagent:./jmx_prometheus_javaagent-0.17.2.jar=12345:config.yaml -jar yourJar.jar
+rules:
+- pattern: ".*"
+

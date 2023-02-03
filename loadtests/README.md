@@ -28,7 +28,7 @@ Most scripts rely on JMeter 5.5 and were tested inside Linux with native Docker 
 - `jmx-maven-ul.s` upload maven artifacts test set to the maven repo (maventest repo)
 - `jmx-maven-dl.s` download maven artifacts test set from the maven repo (maventest repo)
 - `jmx-files-ul.sh` upload random binary data files, like `jmx-run.sh`
-- `jmx-files-ul.sh` download files by list, generated for upload script above
+- `jmx-files-dl.sh` download files by list, generated for upload script above
 - `maven-repo-reset.sh` reset & wipe data for maven repository via Artipie REST API, for tests
 - `bintest-repo-reset.sh` reset & wipe data for binary files repository via Artipie REST API, for tests
 - `monitoring/*` monitoring support for artipie, which consist of two parts, see `README.md` there.

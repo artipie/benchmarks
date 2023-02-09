@@ -28,10 +28,7 @@ curl -X 'PUT' \
     "permissions": {
       "*": [
         "download",
-        "upload",
-        "write",
-        "publish",
-        "deploy"
+        "upload"
       ]
     }
   }

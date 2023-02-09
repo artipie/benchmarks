@@ -1,5 +1,0 @@
-permissions:
-  artipie:
-    - api
-  chgen:
-    - api

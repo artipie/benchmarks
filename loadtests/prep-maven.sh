@@ -6,7 +6,7 @@
 baseDir="$PWD/$(dirname $0)"
 srcRepo="https://repo1.maven.org/maven2"
 srcList="$baseDir/upload-maven.csv"
-dstDir="upload-maven-src/repository"
+dstDir="$baseDir/upload-maven-src/repository"
 tmpRepo="$(mktemp -d)"
 pythonServer="$baseDir/SimpleHTTPPutServer.py"
 pyPort=9998
@@ -52,12 +52,11 @@ srvPid=$!
 popd
 sleep 1
 if [ -d "/proc/$srvPid" ] ; then
+  echo "Server started on port $pyPort with PID $srvPid; data from $tmpRepo to $dstDir"
   ./m2-upload.sh "$tmpRepo" "http://localhost:$pyPort" 2>/dev/null
 else
   echo "Failed to start server on port $pyPort!"
 fi
-
 kill "$srvPid"
 rm -rf "$tmpRepo"
-
 

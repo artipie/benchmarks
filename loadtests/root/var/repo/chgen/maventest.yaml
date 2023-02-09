@@ -5,6 +5,4 @@ repo:
     '*':
       - download
       - upload
-      - write
-      - publish
-      - deploy
+

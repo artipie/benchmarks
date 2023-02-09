@@ -15,7 +15,7 @@ pwd
 #find . -type f \( -name "*.jar" -o -name "*.sha1" -o -name "*.pom" \) -exec curl -v -T {} "$url/{}" \;
 rm -fv mlog.log
 find . -type f -name "*.jar"|xargs -d'\n' -n1 bash -c '
-echo $0 $1;
+echo $0 ${1}:;
 pomFile="${1%.jar}.pom";
 pomArg="";
 if [ -f "$pomFile" ] ; then pomArg="-DpomFile=$pomFile" ; else echo "NO POM!"; pomFile=""; fi;

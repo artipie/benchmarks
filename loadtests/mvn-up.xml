@@ -1,0 +1,24 @@
+<settings>
+	<servers>
+		<server>
+		<id>test-repo</id>
+		<username></username>
+        <password></password>
+		</server>
+	</servers>
+	<profiles>
+		<profile>
+			<id>artipie</id>
+			<repositories>
+				<repository>
+				<id>test-repo</id>
+				<name>Test repo</name>
+				<url>http://localhost:8081/chgen/maventest</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+	<activeProfiles>
+	<activeProfile>artipie</activeProfile>
+	</activeProfiles>
+</settings>

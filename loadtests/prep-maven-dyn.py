@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Configurable maven test data generator
-Usage::
-    ./gen-maven.py groups artifacts versions big_size med_size small_size bigs_percent smalls_percent
+Configurable maven test data generator. Usage:
+./prep-maven-dyn.py --help
+./prep-maven-dyn.py --total-artifacts 100
+./prep-maven-dyn.py --groups 3 --artifacts 4 --versions=5
 """
 
-from io import TextIOBase
 import os
 import shutil
 import pathlib
@@ -14,23 +14,27 @@ import sys
 import tempfile
 import subprocess
 import time
+import argparse
 
 g_termination = False
 
-def generateRepo(dstRepo: str, srv: subprocess.Popen, groups, artifacts, versions, bigSize, medSize, smallSize, bigP, smallP):
+def generateRepo(dstRepo: str, srv: subprocess.Popen, totals, groups, artifacts, versions, bigSize, medSize, smallSize, bigP, mediumP):
     BIG = 'big'
     MED = 'med'
     SMALL = 'small'
 
-    totals = int(groups * artifacts * versions)
     bigs = int(totals * bigP / 100)
-    smalls = int(totals * smallP / 100)
-    mediums = int(totals - bigs - smalls)
-    if totals <= 0 or mediums < 0:
-        print(f"Error. Incorrent artifacts counts: {totals}; {bigs}; {mediums}; {smalls}", file=sys.stderr)
+    mediums = int(totals * mediumP / 100)
+    smalls = int(totals - bigs - mediums)
+    if bigP + mediumP > 100:
+        print(f"Error. bigs percent ({bigP}) + mediums percent ({mediumP}) can't be more than 100", file=sys.stderr)
+        exit(1)
+    if totals <= 0 or smalls < 0:
+        print(f"Error. Incorrent artifacts counts. Check groups/artifacts/versions parameters. \n"
+              f"Total artifact count: {totals}; bigs={bigs}; mediums={mediums}; smalls={smalls}", file=sys.stderr)
         exit(1)
 
-    print(f"Limits: {totals}; {bigs}; {smalls}, {mediums}")
+    print(f"Limits: totals={totals}; bigs={bigs}; mediums={mediums}; smalls={smalls}")
 
     groupsSizes = {BIG: bigSize, MED: medSize, SMALL: smallSize}
     groupsUploaded = {BIG: 0, MED: 0, SMALL: 0}
@@ -49,8 +53,9 @@ def generateRepo(dstRepo: str, srv: subprocess.Popen, groups, artifacts, version
                         totalUploaded += 1
                         break #one new artifact per version 
                     else:
-                        print(f"!!!Limit for {x} with count: {groupsUploaded[x]}; {gr} {ar} {ver}")
-    print(os.listdir('.'), totalUploaded, groupsUploaded)
+                        print(f"!!!Limit for {x} with count: {groupsUploaded[x]}; {gr} {ar} {ver}; totalUploaded={totalUploaded}")
+                if totalUploaded >= totals:
+                    return
 
 def generateArtifact(dstRepo, group, artifact, version, jarSize):
     print('Generation of artifact: ', group, artifact, version, dstRepo, jarSize)
@@ -85,19 +90,25 @@ def generateListing(dstDir, dstList):
         os.chdir(oldcwd)
 
 if __name__ == '__main__':
-    from sys import argv
-    if len(argv) == 9: # time ./prep-maven-dyn.py 4 5 6 9000000 192000 16386 5 30
-        groups = int(argv[1])
-        artifacts = int(argv[2])
-        versions = int(argv[3])
-        bigSize = int(argv[4])
-        medSize = int(argv[5])
-        smallSize = int(argv[6])
-        bigP = int(argv[7])
-        smallP = int(argv[8])
-    else:
-        print(f"Usage: {argv[0]} groups artifacts versions big_size med_size small_size bigs_percent smalls_percent")
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('--total-artifacts', type=int, help='Specify tatal artifacts count. May override groups/artifacts/versions count.', required=False)
+    parser.add_argument('--groups', type=int, default=3, help='Count of maven groups to generate')
+    parser.add_argument('--artifacts', type=int, default=4, help='Count of maven artifacts to generate')
+    parser.add_argument('--versions', type=int, help='Count of maven artifact (sub)versions to generate')
+    parser.add_argument('--big-size', type=int, default=9000000, help='Size of "big" artifact type in bytes')
+    parser.add_argument('--medium-size', type=int, default=192000, help='Size of "medium" artifact type in bytes')
+    parser.add_argument('--small-size', type=int, default=16384, help='Size of "small" artifact type in bytes')
+    parser.add_argument('--big-p', type=int, default=5, help='Percent of "big" artifacts (jars) to generate')
+    parser.add_argument('--medium-p', type=int, default=80, help='Percent of "medium" sized artifacts. The rest will be "small" sized.')
+    args = parser.parse_args()
+    if args.total_artifacts:
+        args.versions = int(args.total_artifacts / args.groups / args.artifacts)
+    elif args.groups == None or args.artifacts == None or args.versions == None:
+        parser.print_help()
         exit(1)
+    else:
+        args.total_artifacts = args.groups * args.artifacts * args.versions
+    print(args)
 
     signal.signal(signal.SIGTERM, sig_handler)
     signal.signal(signal.SIGINT, sig_handler)
@@ -129,7 +140,7 @@ if __name__ == '__main__':
     tmpRepo = tempfile.mkdtemp()
     os.chdir(tmpRepo)
     try:
-        generateRepo(DST_REPO, srv, groups, artifacts, versions, bigSize, medSize, smallSize, bigP, smallP)
+        generateRepo(DST_REPO, srv, args.total_artifacts, args.groups, args.artifacts, args.versions, args.big_size, args.medium_size, args.small_size, args.big_p, args.medium_p)
         generateListing(dstDir, dstList)
     finally:
         shutil.rmtree(tmpRepo)

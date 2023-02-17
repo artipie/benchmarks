@@ -31,23 +31,25 @@ test-data
 
 ## Maven test data generator parameters
 
-Maven test data generator `prep-maven-dyn.py` requires all generator parameters provided for the command line. Here's the command format:
+Maven test data generator `prep-maven-dyn.py` requires all generator parameters provided for the command line. Here's the usage examples:
 ```
-./gen-maven.py groups artifacts versions big_size med_size small_size bigs_percent smalls_percent
+./prep-maven-dyn.py --total-artifacts 100
+./prep-maven-dyn.py --groups 3 --artifacts 4 --versions=5
 ```
-For example:
+
+All available generator parameters (available by `--help` key):
 ```
-./prep-maven-dyn.py 4 5 6 9000000 192000 16386 5 30
+  --total-artifacts TOTAL_ARTIFACTS  Specify tatal artifacts count. May override groups/artifacts/versions count. (default: None)
+  --groups GROUPS           Count of maven groups to generate (default: 3)
+  --artifacts ARTIFACTS
+                            Count of maven artifacts to generate (default: 4)
+  --versions VERSIONS       Count of maven artifact (sub)versions to generate (default: None)
+  --big-size BIG_SIZE       Size of "big" artifact type in bytes (default: 9000000)
+  --medium-size MEDIUM_SIZE Size of "medium" artifact type in bytes (default: 192000)
+  --small-size SMALL_SIZE   Size of "small" artifact type in bytes (default: 16384)
+  --big-p BIG_P             Percent of "big" artifacts (jars) to generate (default: 5)
+  --medium-p MEDIUM_P       Percent of "medium" sized artifacts. The rest will be "small" sized. (default: 80)
 ```
-Paramets description:
-- `groups` number of maven groups to generate 
-- `artifacts` number of artifacts inside the group to generate
-- `versions` number of versions per artifactId
-- `big_size` size of "big" artifact type in bytes
-- `med_size` size of "medium" artifact type in bytes
-- `small_size` size of "small" artifact type in bytes
-- `bigs_percent` percent of "big" artifacts (jars) to generate
-- `smalls_percent` percent of "small" artifacts. The rest will be "medium" sized.
 
 ## Downloading via proxy (JMeter)
 

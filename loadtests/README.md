@@ -41,8 +41,7 @@ All available generator parameters (available by `--help` key):
 ```
   --total-artifacts TOTAL_ARTIFACTS  Specify tatal artifacts count. May override groups/artifacts/versions count. (default: None)
   --groups GROUPS           Count of maven groups to generate (default: 3)
-  --artifacts ARTIFACTS
-                            Count of maven artifacts to generate (default: 4)
+  --artifacts ARTIFACTS     Count of maven artifacts to generate (default: 4)
   --versions VERSIONS       Count of maven artifact (sub)versions to generate (default: None)
   --big-size BIG_SIZE       Size of "big" artifact type in bytes (default: 9000000)
   --medium-size MEDIUM_SIZE Size of "medium" artifact type in bytes (default: 192000)

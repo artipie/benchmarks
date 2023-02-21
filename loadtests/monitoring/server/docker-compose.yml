@@ -1,0 +1,50 @@
+---
+version: "3.7"
+services:
+  telegraf:
+    image: telegraf:1.24.3
+    volumes:
+      - ./conf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - influxdb2
+    ports:
+      - '8125:8125'
+      - '1234:1234'
+    extra_hosts:
+      - "host.docker.internal:${HOST_GATEWAY}"
+  influxdb2:
+    image: influxdb:2.5.1
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb2-config:/etc/influxdb2
+      - influxdb2-data:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=artipie
+      - DOCKER_INFLUXDB_INIT_BUCKET=abucket
+      - DOCKER_INFLUXDB_INIT_RETENTION=1w
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=randomAdminInitTokenValue
+    extra_hosts:
+      - "host.docker.internal:${HOST_GATEWAY}"
+  grafana:
+    image: grafana/grafana:9.2.4
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./grafana-provisioning:/etc/grafana/provisioning
+      #- ./grafana-dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - influxdb2
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    extra_hosts:
+      - "host.docker.internal:${HOST_GATEWAY}"
+volumes:
+  influxdb2-config:
+  influxdb2-data:
+  chronograf-storage:
+  grafana-storage:

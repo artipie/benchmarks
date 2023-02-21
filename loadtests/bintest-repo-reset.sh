@@ -4,7 +4,7 @@ if [ $# -lt 1 ]; then
 fi
 host="$1"
 apiPort="${2:-8086}"
-repo="${3:-chgen/maventest}"
+repo="${3:-chgen/bintest}"
 
 login=chgen
 pass=chgen
@@ -23,12 +23,15 @@ curl -X 'PUT' \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": {
-    "type": "maven",
+    "type": "file",
     "storage": "default",
     "permissions": {
       "*": [
         "download",
-        "upload"
+        "upload",
+        "write",
+        "publish",
+        "deploy"
       ]
     }
   }

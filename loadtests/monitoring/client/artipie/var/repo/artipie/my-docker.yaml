@@ -1,8 +1,6 @@
 repo:
-  type: maven
+  type: docker
   storage: default
   permissions:
     "*":
-      - download
-      - upload
-
+      - "*"

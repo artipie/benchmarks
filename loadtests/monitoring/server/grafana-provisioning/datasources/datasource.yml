@@ -1,0 +1,13 @@
+apiVersion: 1
+datasources:
+  - name: InfluxDB_v2_Flux
+    type: influxdb
+    url: http://host.docker.internal:8086
+    secureJsonData:
+      token: randomAdminInitTokenValue
+    jsonData:
+      version: Flux
+      organization: artipie
+      defaultBucket: abucket
+      tlsSkipVerify: true
+      

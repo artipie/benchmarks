@@ -1,0 +1,35 @@
+---
+version: "3.7"
+services:
+  prometheus:
+    image: prom/prometheus:v2.39.1
+    volumes:
+      - ./conf/:/etc/prometheus/
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.config.file=/etc/prometheus/web.yml
+    ports:
+      - "9090:9090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  artipie-test:
+    image: artipie/artipie:v0.28.0
+    volumes:
+      - "./artipie/etc:/etc/artipie"
+      - "./artipie/var:/var/artipie"
+    user: $ARTIPIE_USER
+    environment:
+      - JVM_ARGS=
+        -agentlib:jdwp=transport=dt_socket,server=y,address=*:${JDEBUG},suspend=n -Djava.rmi.server.hostname=localhost 
+        -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=${JMX_PORT} 
+        -Dcom.sun.management.jmxremote.rmi.port=${JMX_PORT} -Dcom.sun.management.jmxremote.local.only=false 
+        -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false
+    ports:
+      - "8080:8080" #Main repository endpoint
+      - "8087:8087" #New Artipie metrics
+      - "${JDEBUG}:${JDEBUG}" #Java remote debugger port. See `.env` file
+      - "${JMX_PORT}:${JMX_PORT}" #JMX/JFR remote tools
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    #profiles:
+    #  - dontstart

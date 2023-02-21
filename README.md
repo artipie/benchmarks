@@ -90,7 +90,15 @@ for hosted repositories is to import some existing repository for it. The good w
 proxy repository - to build a number of popular projects to fill it (the best way is
 still import existing data if you have it).
 
-##  Per-repository testing
+##  Performance testing
 
-1. [Files](files/README.md)
-2. [NPM](npm/README.md)
+Currently basic performance testing could be done for maven and binary files adapters. Scripts rely on docker and jmeter tools. More details are in [loadtests/README.md](loadtests/README.md)
+
+## Performance Monitoring
+
+Performance monitoring configuration provides Grafana dashboards and based on docker compose, see [loadtests/monitoring/README.md](loadtests/monitoring/README.md)
+
+## Performance and load testing
+
+Currently we implemented [scenarios](#scenarios) for stress tests of private repositories with types `maven` and `files`. See [loadtests/](loadtests/README.md)
+

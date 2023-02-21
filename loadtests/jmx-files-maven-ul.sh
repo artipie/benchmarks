@@ -1,12 +1,13 @@
 #!/bin/bash -e
 
-if [ $# -ne 3 ]; then 
-    echo "Usage: $0 host port duration" && exit 1
+if [ $# -ne 4 ]; then 
+    echo "Usage: $0 host port duration (maven-dyn|maven-real)" && exit 1
 fi
 
 host="$1"
 port="$2"
 duration="$3"
+repo="$4"
 
 cd `dirname "$0"`
 
@@ -20,7 +21,6 @@ mkdir artipie-upload-res
 echo "Run jmeter tests"
 # -e -o ./artipie-upload-res
 "$jmeter" -n -t ./upload-maven-csv.jmx -l ./artipie-upload.log -e -o ./artipie-upload-res -Jrepository.host="$host" -Jrepository.port="$port" \
-  -Jrepository.path=chgen/bintest -Jduration="$duration" -Jsrc.path=upload-maven-src/repository -Jsrc.list=upload-maven.csv
+  -Jrepository.path=chgen/bintest -Jduration="$duration" -Jsrc.path=test-data/$repo/repository -Jsrc.list=test-data/$repo/files-list.csv
 mv -f artipie-upload.log artipie-upload-res
 mv -f artipie-upload-res "files_ul_maven_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"
-

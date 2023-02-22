@@ -11,6 +11,11 @@ repo="$4"
 
 cd `dirname "$0"`
 
+repoDir="test-data/$repo"
+if [ ! -d "$repoDir" ] ; then
+    echo "$repoDir data directory not found. Prepare data first!" && exit 2
+fi
+
 jmeter="./apache-jmeter-5.5/bin/jmeter"
 
 echo "Remove old results"
@@ -19,8 +24,7 @@ rm -f artipie-upload.log
 mkdir artipie-upload-res
 
 echo "Run jmeter tests"
-# -e -o ./artipie-upload-res
 "$jmeter" -n -t ./upload-maven-csv.jmx -l ./artipie-upload.log -e -o ./artipie-upload-res -Jrepository.host="$host" -Jrepository.port="$port" \
-  -Jrepository.path=chgen/bintest -Jduration="$duration" -Jsrc.path=test-data/$repo/repository -Jsrc.list=test-data/$repo/files-list.csv
+  -Jrepository.path=chgen/bintest -Jduration="$duration" -Jsrc.path=$repoDir/repository -Jsrc.list=$repoDir/files-list.csv
 mv -f artipie-upload.log artipie-upload-res
 mv -f artipie-upload-res "files_ul_maven_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"

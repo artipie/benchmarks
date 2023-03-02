@@ -11,7 +11,7 @@ Tests were performed in Linux, Ubuntu 22.04 LTS x86_64, with local docker & open
 
 ## JFR and debugging support
 
-JFR recording for running artipie docker container could be accomplised via remote JMX connections. Both, `artipie-docker.sh` and `monitoring/client` open port `9999` for JMX connections to artipie container. Java debugger could be attached via 8000 port.
+JFR recording for running artipie docker container could be accomplished via remote JMX connections. Both, `artipie-docker.sh` and `monitoring/client` open port `9999` for JMX connections to artipie container. Java debugger could be attached via 8000 port.
 JMX connections for JFR recording were tested with `JDK Mission Control v8.2.1` for Linux and Windows (native docker inside WSL2).
 
 ## Datasets

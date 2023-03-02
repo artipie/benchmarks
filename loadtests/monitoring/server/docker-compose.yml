@@ -12,10 +12,12 @@ services:
       - '1234:1234'
     extra_hosts:
       - "host.docker.internal:${HOST_GATEWAY}"
+    environment:
+      - INFLUXDB2_PORT=${INFLUXDB2_PORT}
   influxdb2:
     image: influxdb:2.6.1
     ports:
-      - "8086:8086"
+      - "${INFLUXDB2_PORT}:${INFLUXDB2_PORT}"
     volumes:
       - influxdb2-config:/etc/influxdb2
       - influxdb2-data:/var/lib/influxdb2
@@ -27,6 +29,8 @@ services:
       - DOCKER_INFLUXDB_INIT_BUCKET=abucket
       - DOCKER_INFLUXDB_INIT_RETENTION=1w
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=randomAdminInitTokenValue
+      # INFLUXDB2_PORT variable used in config files of grafana & telegraf
+      - INFLUXDB2_PORT=${INFLUXDB2_PORT}
     extra_hosts:
       - "host.docker.internal:${HOST_GATEWAY}"
   grafana:
@@ -40,6 +44,7 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - INFLUXDB2_PORT=${INFLUXDB2_PORT}
     extra_hosts:
       - "host.docker.internal:${HOST_GATEWAY}"
 volumes:

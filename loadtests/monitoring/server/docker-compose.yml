@@ -8,7 +8,6 @@ services:
     depends_on:
       - influxdb2
     ports:
-      - '8125:8125'
       - '1234:1234'
     extra_hosts:
       - "host.docker.internal:${HOST_GATEWAY}"

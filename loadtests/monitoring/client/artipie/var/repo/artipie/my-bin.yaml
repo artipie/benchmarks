@@ -1,8 +1,6 @@
 repo:
-  type: maven
+  type: file
   storage: default
   permissions:
     "*":
-      - download
-      - upload
-
+      - "*"

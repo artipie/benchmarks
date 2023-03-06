@@ -1,0 +1,16 @@
+meta:
+  storage:
+    type: fs
+    path: /var/artipie/repo
+  credentials:
+    -
+      type: file
+      path: _credentials.yaml
+    -
+      type: github
+    -
+      type: env
+  layout: org
+  metrics:
+    endpoint: "/artipie/metrics"
+    port: 8087

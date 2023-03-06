@@ -3,6 +3,4 @@ repo:
   storage: default
   permissions:
     "*":
-      - download
-      - upload
-
+      - "*"

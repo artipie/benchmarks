@@ -2,10 +2,9 @@ repo:
   type: file
   storage: default
   permissions:
+    chgen:
+      - "upload"
+      - "download"
     "*":
       - "download"
       - "upload"
-      - "write"
-      - "publish"
-      - "deploy"
-

@@ -15,49 +15,119 @@ import tempfile
 import subprocess
 import time
 import argparse
+import hashlib
+from dataclasses import dataclass
+import zipfile
+
+@dataclass
+class RepoConfig:
+    '''
+    Dynamic repository generation config
+    '''
+    totals: int
+    groups: int
+    artifacts: int
+    versions: int
+    bigSize: int
+    medSize: int
+    smallSize: int
+    bigP: int
+    mediumP: int
 
 g_termination = False
 
-def generateRepo(dstRepo: str, srv: subprocess.Popen, totals, groups, artifacts, versions, bigSize, medSize, smallSize, bigP, mediumP):
+def generateRepo(dstRepo: str, dstDir: str, srv: subprocess.Popen, cfg: RepoConfig):
     BIG = 'big'
     MED = 'med'
     SMALL = 'small'
 
-    bigs = int(totals * bigP / 100)
-    mediums = int(totals * mediumP / 100)
-    smalls = int(totals - bigs - mediums)
-    if bigP + mediumP > 100:
-        print(f"Error. bigs percent ({bigP}) + mediums percent ({mediumP}) can't be more than 100", file=sys.stderr)
+    bigs = int(cfg.totals * cfg.bigP / 100)
+    mediums = int(cfg.totals * cfg.mediumP / 100)
+    smalls = int(cfg.totals - bigs - mediums)
+    if cfg.bigP + cfg.mediumP > 100:
+        print(f"Error. bigs percent ({cfg.bigP}) + mediums percent ({cfg.mediumP}) can't be more than 100", file=sys.stderr)
         exit(1)
-    if totals <= 0 or smalls < 0:
+    if cfg.totals <= 0 or smalls < 0:
         print(f"Error. Incorrent artifacts counts. Check groups/artifacts/versions parameters. \n"
-              f"Total artifact count: {totals}; bigs={bigs}; mediums={mediums}; smalls={smalls}", file=sys.stderr)
+              f"Total artifact count: {cfg.totals}; bigs={bigs}; mediums={mediums}; smalls={smalls}", file=sys.stderr)
         exit(1)
 
-    print(f"Limits: totals={totals}; bigs={bigs}; mediums={mediums}; smalls={smalls}")
+    print(f"Limits: totals={cfg.totals}; bigs={bigs}; mediums={mediums}; smalls={smalls}")
 
-    groupsSizes = {BIG: bigSize, MED: medSize, SMALL: smallSize}
+    groupsSizes = {BIG: cfg.bigSize, MED: cfg.medSize, SMALL: cfg.smallSize}
     groupsUploaded = {BIG: 0, MED: 0, SMALL: 0}
     groupsLimits = {BIG: bigs, MED: mediums, SMALL: smalls}
 
     totalUploaded = 0
-    for gr in range(1, groups + 1):
-        for ar in range(1, artifacts + 1):
-            for ver in range(1, versions + 1):
+    for gr in range(1, cfg.groups + 1):
+        for ar in range(1, cfg.artifacts + 1):
+            for ver in range(1, cfg.versions + 1):
                 for x in groupsSizes.keys():
                     if g_termination or srv.poll() != None:
                         return
                     if groupsUploaded[x] < groupsLimits[x]:
-                        generateArtifact(dstRepo, f"group{gr}", f"artifact{ar}-{x}", f"1.{ver}.0", groupsSizes[x])
+                        generateArtifact_fast(dstDir, f"group{gr}", f"artifact{ar}-{x}", f"1.{ver}.0", groupsSizes[x])
+                        #generateArtifact_MVN(dstRepo, f"group{gr}", f"artifact{ar}-{x}", f"1.{ver}.0", groupsSizes[x])
                         groupsUploaded[x] += 1
                         totalUploaded += 1
                         break #one new artifact per version 
                     else:
-                        print(f"!!!Limit for {x} with count: {groupsUploaded[x]}; {gr} {ar} {ver}; totalUploaded={totalUploaded}")
-                if totalUploaded >= totals:
+                        print(f"  limit for {x} with count: {groupsUploaded[x]}; {gr} {ar} {ver}; totalUploaded={totalUploaded}")
+                if totalUploaded >= cfg.totals:
                     return
 
-def generateArtifact(dstRepo, group, artifact, version, jarSize):
+def generateArtifact_fast(dstDir, group, artifact, version, jarSize):
+    print('Generation of artifact: ', group, artifact, version, dstDir, jarSize)
+    workdir = "tmp"
+    os.makedirs(f"{workdir}/META-INF/res", exist_ok = True)
+    pathlib.Path(f"{workdir}/META-INF/MANIFEST.MF").write_text("Manifest-Version: 1.0")
+    with open(f"{workdir}/META-INF/res/random.data", "wb") as f:
+        f.write(os.urandom(jarSize))
+    oldcwd = os.getcwd()
+    os.chdir(workdir)
+    zipFile = f"{oldcwd}/res.zip"
+    with zipfile.ZipFile(zipFile, "w", zipfile.ZIP_DEFLATED, compresslevel=1) as zf:
+        for root, _, filenames in os.walk('.'):
+            for name in filenames:
+                name = os.path.join(root, name)
+                name = os.path.normpath(name)
+                zf.write(name, name)
+    os.chdir(oldcwd)
+    artifactDir = f"{dstDir}/{group}/{artifact}/{version}"
+    os.makedirs(artifactDir, exist_ok = True)
+    jarFile = f"{artifactDir}/{artifact}-{version}.jar"
+    pomFile = f"{artifactDir}/{artifact}-{version}.pom"
+    shutil.move(zipFile, jarFile)
+    with open(pomFile, "wt") as pom:
+        print(
+f"""<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>{group}</groupId>
+    <artifactId>{artifact}</artifactId>
+    <version>{version}</version>
+</project>
+""", file=pom)
+    shutil.rmtree(workdir)
+    generateHashes(jarFile)
+    generateHashes(pomFile)
+
+def generateHashes(targetFile: str):
+    BUF_SIZE = 256 * 1024
+    md5 = hashlib.md5()
+    sha1 = hashlib.sha1()
+    with open(targetFile, 'rb') as f:
+        while True:
+            data = f.read(BUF_SIZE)
+            if not data:
+                break
+            md5.update(data)
+            sha1.update(data)
+    pathlib.Path(f"{targetFile}.md5").write_text(f"{md5.hexdigest()}")
+    pathlib.Path(f"{targetFile}.sha1").write_text(f"{sha1.hexdigest()}")
+    
+def generateArtifact_MVN(dstRepo, group, artifact, version, jarSize):
     print('Generation of artifact: ', group, artifact, version, dstRepo, jarSize)
     os.makedirs("META-INF/res", exist_ok = True)
     pathlib.Path("META-INF/MANIFEST.MF").write_text("Manifest-Version: 1.0")
@@ -140,7 +210,8 @@ if __name__ == '__main__':
     tmpRepo = tempfile.mkdtemp()
     os.chdir(tmpRepo)
     try:
-        generateRepo(DST_REPO, srv, args.total_artifacts, args.groups, args.artifacts, args.versions, args.big_size, args.medium_size, args.small_size, args.big_p, args.medium_p)
+        cfg = RepoConfig(args.total_artifacts, args.groups, args.artifacts, args.versions, args.big_size, args.medium_size, args.small_size, args.big_p, args.medium_p)
+        generateRepo(DST_REPO, dstDir, srv, cfg)
         generateListing(dstDir, dstList)
     finally:
         shutil.rmtree(tmpRepo)

@@ -19,12 +19,18 @@ fi
 jmeter="./apache-jmeter-5.5/bin/jmeter"
 
 echo "Remove old results"
-rm -rf artipie-upload-res
+testDir="artipie_test_res"
+lastDir="last_test_result"
+rm -rf "$testDir"
+rm -f "$lastDir"
 rm -f artipie-upload.log
-mkdir artipie-upload-res
+mkdir "$testDir"
 
 echo "Run jmeter tests"
-"$jmeter" -n -t ./upload-maven-csv.jmx -l ./artipie-upload.log -e -o ./artipie-upload-res -Jrepository.host="$host" -Jrepository.port="$port" \
+"$jmeter" -n -t ./upload-maven-csv.jmx -l ./artipie-upload.log -e -o "$testDir" -Jrepository.host="$host" -Jrepository.port="$port" \
   -Jrepository.path=chgen/bintest -Jduration="$duration" -Jsrc.path=$repoDir/repository -Jsrc.list=$repoDir/files-list.csv
-mv -f artipie-upload.log artipie-upload-res
-mv -f artipie-upload-res "files_ul_maven_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"
+mv -f artipie-upload.log "$testDir"
+resDir="files_ul_maven_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"
+mv -f "$testDir" "$resDir"
+ln -s "$resDir" "$lastDir"
+

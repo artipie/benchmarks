@@ -1,0 +1,34 @@
+{
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 3773,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 5.8187119003445495,
+    "medianResTime" : 4.0,
+    "minResTime" : 2.0,
+    "maxResTime" : 241.0,
+    "pct1ResTime" : 7.0,
+    "pct2ResTime" : 8.0,
+    "pct3ResTime" : 25.259999999999764,
+    "throughput" : 139.97922386287752,
+    "receivedKBytesPerSec" : 14849.825636095291,
+    "sentKBytesPerSec" : 26.03009699395266
+  },
+  "Get asset" : {
+    "transaction" : "Get asset",
+    "sampleCount" : 3773,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 5.8187119003445495,
+    "medianResTime" : 4.0,
+    "minResTime" : 2.0,
+    "maxResTime" : 241.0,
+    "pct1ResTime" : 7.0,
+    "pct2ResTime" : 8.0,
+    "pct3ResTime" : 25.259999999999764,
+    "throughput" : 139.97922386287752,
+    "receivedKBytesPerSec" : 14849.825636095291,
+    "sentKBytesPerSec" : 26.03009699395266
+  }
+}

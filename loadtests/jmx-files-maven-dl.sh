@@ -27,10 +27,9 @@ rm -f artipie-upload.log
 mkdir "$testDir"
 
 echo "Run jmeter tests"
-"$jmeter" -n -t ./test-data/files-dyn/download-files-csv.jmx -l ./artipie-upload.log -e -o ./artipie-upload-res -Jrepository.host="$host" -Jrepository.port="$port" \
+"$jmeter" -n -t ./test-data/files-dyn/download-files-csv.jmx -l ./artipie-upload.log -e -o "$testDir" -Jrepository.host="$host" -Jrepository.port="$port" \
   -Jrepository.path=chgen/bintest -Jduration="$duration" -Jsrc.path=tmp -Jsrc.list=$repoDir/files-list.csv
-mv -f artipie-upload.log $testDir"
+mv -f artipie-upload.log "$testDir"
 resDir="files_dl_maven_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"
 mv -f "$testDir" "$resDir"
 ln -s "$resDir" "$lastDir"
-

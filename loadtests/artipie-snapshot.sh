@@ -6,7 +6,7 @@ fi
 port="$1"
 JMX_PORT=9999
 JDEBUG=8000
-ARTIPIE_JVM_EXTRA="-XX:StartFlightRecording=disk=true,filename=/var/artipie/.storage/data/chgen/bintest/artipie.jfr"
+ARTIPIE_JVM_EXTRA="-XX:StartFlightRecording=disk=true,dumponexit=true,filename=/var/artipie/.storage/data/chgen/bintest/artipie.jfr"
 cd `dirname "$0"`
 mkdir -p "root/var/.storage/data/chgen/bintest"
 docker stop artipie || :

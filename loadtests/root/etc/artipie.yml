@@ -2,11 +2,12 @@ meta:
   storage:
     type: fs
     path: /var/artipie/repo
-  credentials:
-    type: file
-    path: _credentials.yaml
   layout: org
-#  base_url: http://central.artipie.com/
   metrics:
     type: log
     interval: 60
+  credentials:
+    - type: artipie
+      storage:
+        type: fs
+        path: /var/artipie/security

@@ -22,9 +22,8 @@ mkdir "$testDir"
 
 echo "Run jmeter tests"
 # -e -o ./artipie-upload-res
-"$jmeter" -n -t ./test-data/files-dyn/upload-files.jmx -l ./artipie-upload.log -e -o ./artipie-upload-res -Jrepository.host="$host" -Jrepository.port="$port" \
+"$jmeter" -n -t ./test-data/files-dyn/upload-files.jmx -l ./artipie-upload.log -e -o "$testDir" -Jrepository.host="$host" -Jrepository.port="$port" \
   -Jrepository.path=/chgen/bintest/ -Jduration="$duration"
 resDir="files_ul_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"
 mv -f "$testDir" "$resDir"
 ln -s "$resDir" "$lastDir"
-

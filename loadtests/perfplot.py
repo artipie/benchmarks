@@ -10,7 +10,6 @@ import shutil
 import pathlib
 import signal
 import sys
-import mdutils
 from mdutils.tools.Table import Table
 import json
 from matplotlib.axes import Axes
@@ -18,7 +17,7 @@ import matplotlib.pyplot as plt
 from packaging import version
 from pathlib import Path
 
-# pip3 install packaging matplotlib
+# pip3 install packaging==21.3 matplotlib==3.6.3 mdutils==1.6.0
 
 
 def generateGraph(testName: str, statFiles: dict, dstDir: str, mainLineName: str = 'throughput', secondLineName: str = 'meanResTime' ):
@@ -55,8 +54,13 @@ def generateGraph(testName: str, statFiles: dict, dstDir: str, mainLineName: str
     table : Axes = axes[1]
     table.set_visible(True)
     table.axis("off")
-    table.table(list(zip(tags, secondLineData)), colLabels = ['Tags', 'Vals'], colColours = ['lightgray', "lightgray"], loc="upper center")
-    tableData = [p for p in range(len(tags)) for p in (tags[p], secondLineData[p])]
+    tdata = list(zip(tags, list(map(lambda x: "{:.3f}".format(x), secondLineData))))
+    t : Table = table.table(tdata, colLabels = ['Tags', 'Vals'], colColours = ['lightgray', "lightgray"], loc="upper center")
+    t.auto_set_font_size(False)
+    t.set_fontsize(labelFontSize)
+    t.scale(1, 1.8)
+    
+    tableData = [p for p in range(len(tags)) for p in (tags[p], "{:.3f}".format(secondLineData[p]))]
     strtable = Table().create_table(columns=2, rows=len(tags) + 1, text=['Tags', 'Vals'] + tableData, text_align='center')
     print(strtable)
     
@@ -75,7 +79,7 @@ def generateGraph(testName: str, statFiles: dict, dstDir: str, mainLineName: str
     y1.set_xlabel("Tags", fontsize = labelFontSize)
     
     sz = plt.gcf().get_size_inches()
-    #plt.gcf().set_size_inches(sz[0] * 1.5, sz[1] * 1)
+    #plt.gcf().set_size_inches(sz[0] * 1.5, sz[1] * 1) # scaling whole graph
 
     extraLabel = {} if lineColor == None else {'color': lineColor}
     extraTick = {} if lineColor == None else {'labelcolor': lineColor}
@@ -104,7 +108,7 @@ def generateGraph(testName: str, statFiles: dict, dstDir: str, mainLineName: str
     y1.set_title(f'JMeter artipie test {testName}', fontsize = 16)
     plt.tight_layout()
     os.makedirs(dstDir, exist_ok = True)
-    plt.savefig(f"{dstDir}/{testName}.png", dpi=150, bbox_inches='tight')
+    plt.savefig(f"{dstDir}/{testName}.svg", dpi=150, bbox_inches='tight')
     plt.cla()
     plt.clf()
 

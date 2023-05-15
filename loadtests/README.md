@@ -106,6 +106,55 @@ All available generator parameters (available by `--help` key):
   --medium-p MEDIUM_P       Percent of "medium" sized artifacts. The rest will be "small" sized. (default: 80)
 ```
 
+## Performance data
+
+Performance data for tested tags is commited to `perftests_repo/perftests/<tag>/<testname>` directory on `https://central.artipie.com/artipie/benchmarks` server. Here `tag` is pushed git tag in `artipie/artipie` project repository, and `testname` is testing script `benchmarks/loadtests/<testname>.sh` in `master` git branch.
+
+Graphs data is in JMeter `statistics.json` format. Performance graphs could be generated for the set of collected test results, using provided `perfplot.py`. For example:
+
+```
+./perfplot.py ../perftests ./graphs
+
+$ ls graphs/
+jmx-files-maven-dl.png  jmx-files-maven-ul.png
+```
+
+Performance results currently stored on the `central.artipie.com` server. Command below is used by CI for downloading and uploading performance data.
+
+```
+time ./sync_perftests.sh https://central.artipie.com/artipie/benchmarks Login password
+```
+
+Useful JMeter metrics:
+
+* `throughput` - number of requests per second.
+* `meanResTime` - average response time, msec.
+* `medianResTime` - the median value (50th percentile) of response time, msec.
+* `pct1ResTime` - 90th percentile, response time, msec.
+* `pct2ResTime` - 95th percentile, response time, msec.
+* `pct3ResTime` - 99th percentile, response time, msec.
+* `sampleCount` - number of requests during test.
+* `errorCount`  - count of errors during the test.
+
+## Testing commands for curl
+
+```
+curl -v -X PUT -d 'test data' http://localhost:8081/chgen/bintest/test.txt
+curl -v -X PUT -T ./jmeter.log http://localhost:8081/chgen/bintest/jmeter.log
+curl -v -H 'Accept: text/plain' http://localhost:8081/chgen/bintest/
+curl -v -H 'Accept: text/plain' https://central.artipie.com/artipie/benchmarks/perftests_repo
+```
+
+![Last uploading performance test](https://central.artipie.com/artipie/benchmarks/perftests_repo/graphs/jmx-files-maven-ul.svg)
+
+
+## JFR
+
+Last JFR recordings for performance tests could be downloaded by:
+
+https://central.artipie.com/artipie/benchmarks/perftests_repo/jfr/artipie.last.jfr.tar.xz
+
+
 ## Downloading maven artifacts via JMeter proxy
 1. Run Apache JMeter in GUI mode
 2. Open project, and add new element: `Edit->Add->Non-test elements->HTTPS test script recorder`

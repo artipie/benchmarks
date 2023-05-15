@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [ $# -ne 3 ]; then 
+if [ $# -lt 3 ]; then # just ignore extra args
     echo "Usage: $0 host port duration" && exit 1
 fi
 

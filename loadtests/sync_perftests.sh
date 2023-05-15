@@ -24,14 +24,6 @@ pushd "$repoPath"
 
 
 curl -f -s -S $curlExtra "$repoUrl/$testsList" -o "$testsList"
-# for test in `cat "$testsList"` ; do
-#   if [ -s "$test" ] ; then
-#     echo "test result exist: $test"
-#   else  
-#     mkdir -p $(dirname "$test")
-#     curl -f -s -S $curlExtra "$repoUrl/$test" -o "$test"
-#   fi
-# done
 
 cat  "$testsList"|while read a ; do
   read b || :; read c || :; read d || :
@@ -47,9 +39,6 @@ cat  "$testsList"|while read a ; do
 done
 
 find "perftests" -name statistics.json > "$testsList"
-#for test in `cat "$testsList"` ; do 
-#  curl -f -s -S -X PUT -T "$test" $curlExtra "$repoUrl/$test"
-#done
 
 cat  "$testsList"|while read a ; do
   read b || :; read c || :; read d || :

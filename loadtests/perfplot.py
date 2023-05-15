@@ -19,7 +19,6 @@ from pathlib import Path
 
 # pip3 install packaging==21.3 matplotlib==3.6.3 mdutils==1.6.0
 
-
 def generateGraph(testName: str, statFiles: dict, dstDir: str, mainLineName: str = 'throughput', secondLineName: str = 'meanResTime' ):
     tags = []
     statData = {}
@@ -44,7 +43,6 @@ def generateGraph(testName: str, statFiles: dict, dstDir: str, mainLineName: str
     secondaryColor = 'red'
     
     labelFontSize = 12
-
     
     lines = []
     fig, axes =  plt.subplots(2, 1) # , constrained_layout=True  , figsize=plt.figaspect(0.5)
@@ -132,17 +130,7 @@ if __name__ == '__main__':
         stats.sort(key = lambda x: version.parse(x.parts[-3])) #sort by tag as version
 
     for name, stats in testGroups.items():
-        #print(name, stats)
         generateGraph(name, stats, sys.argv[2])
-
-    #TODO: 
-    # External args & names
-    # all 0.5 alpha or 2 opaque ?
-    # usage doc - list of params + their meaning/units; # throughput meanResTime medianResTime pct1ResTime sampleCount
-    # try log scale for Y
     
     exit(0)
-
     #plt.show()
-    
-#./perfplot.py ../perftests graphs && wslview graphs/jmx-files-maven-ul.png

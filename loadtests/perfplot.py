@@ -4,11 +4,7 @@ Plotting recorded performance data to .png graphs. Usage:
 ./perfplot.py ../perftests graphs_out
 """
 from dataclasses import dataclass
-import functools
 import os
-import shutil
-import pathlib
-import signal
 import sys
 from mdutils.tools.Table import Table
 import json
@@ -41,36 +37,37 @@ def generateGraph(testName: str, statFiles: dict, dstDir: str, mainLineName: str
 
     lineColor = None if len(secondLineName) == 0 else "blue"
     secondaryColor = 'red'
+    hdrColor = 'lightgray'
     
     labelFontSize = 12
     
     lines = []
-    fig, axes =  plt.subplots(2, 1) # , constrained_layout=True  , figsize=plt.figaspect(0.5)
+    fig, axes =  plt.subplots(2, 1) # , constrained_layout=True, figsize=plt.figaspect(0.5)
     #fig = plt.figure(figsize=plt.figaspect(1))
     #plt.subplots_adjust(wspace=0, hspace=0, top=2) 
 
     table : Axes = axes[1]
     table.set_visible(True)
     table.axis("off")
-    tdata = list(zip(tags, list(map(lambda x: "{:.3f}".format(x), secondLineData))))
-    t : Table = table.table(tdata, colLabels = ['Tags', 'Vals'], colColours = ['lightgray', "lightgray"], loc="upper center")
-    t.auto_set_font_size(False)
-    t.set_fontsize(labelFontSize)
-    t.scale(1, 1.8)
     
-    tableData = [p for p in range(len(tags)) for p in (tags[p], "{:.3f}".format(secondLineData[p]))]
-    strtable = Table().create_table(columns=2, rows=len(tags) + 1, text=['Tags', 'Vals'] + tableData, text_align='center')
-    print(strtable)
+    tableCols = [tags]
+    tableHdr = ['Tags']
+    tableColors = [hdrColor]
     
     y1: Axes = axes[0] # plt.gca()
     for lineName, lineData in statData.items():
+        if len(lineName) == 0 or len(lineData) == 0:
+            continue
         if lineName == mainLineName:
             lineAlpha = 1.0
-        elif len(secondLineName) == 0:
+        elif len(secondLineName) == 0: # secondary line is semi-transparent
             lineAlpha = 0.3
         else:
             continue
         lines += y1.plot(tags, lineData, label = lineName, color = lineColor, linewidth = 2.0, alpha = lineAlpha)
+        tableCols.append(list(map(lambda x: "{:.2f}".format(x), lineData)))
+        tableHdr.append(lineName)
+        tableColors.append(hdrColor)
 
     y1.set_xticks(tags) # avoiding warning next line
     y1.set_xticklabels(tags, fontsize = 8, rotation = 45)
@@ -84,7 +81,7 @@ def generateGraph(testName: str, statFiles: dict, dstDir: str, mainLineName: str
     y1.set_ylabel(mainLineName, fontsize = labelFontSize, **extraLabel)
 
     y1.tick_params(axis = "y", **extraTick)
-    y1.set_ylim(bottom = 0)
+    y1.set_ylim(bottom = 0.0)
     
     y1.tick_params(axis='x', which='major', labelsize=labelFontSize * 0.5)
     y1.tick_params(axis='x', which='minor', labelsize=labelFontSize)
@@ -96,10 +93,19 @@ def generateGraph(testName: str, statFiles: dict, dstDir: str, mainLineName: str
         y2.tick_params(axis = "y", labelcolor = secondaryColor)
         y2.set_ylim(bottom = 0.0)
         #y2.set_visible(False)
-
+        tableCols.append(list(map(lambda x: "{:.2f}".format(x), secondLineData)))
+        tableHdr.append(secondLineName)
+        tableColors.append(hdrColor)
 
     #y1.set_visible(False)
     #y1.axis("off")
+
+    tdata = list(zip(*tableCols))
+    print('Table: ', len(tableCols), len(tableHdr), len(tableColors), tdata)
+    t : Table = table.table(tdata, colLabels = tableHdr, colColours = tableColors, loc="upper center")
+    t.auto_set_font_size(False)
+    t.set_fontsize(labelFontSize)
+    t.scale(1, 1.8)
 
     y1.legend(handles = lines, loc='upper right', framealpha = 0.6)
     y1.grid(color = 'lightgray', linestyle = 'dashed')

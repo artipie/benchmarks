@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 if [ $# -lt 1 ]; then 
     echo "Usage: $0 URL [login password]" && exit 1
 fi
@@ -23,7 +23,7 @@ mkdir -p "$repoPath"
 pushd "$repoPath"
 
 
-curl -f -s -S $curlExtra "$repoUrl/$testsList" -o "$testsList"
+curl -f -v -s -S $curlExtra "$repoUrl/$testsList" -o "$testsList" || :
 
 cat  "$testsList"|while read a ; do
   read b || :; read c || :; read d || :
@@ -32,7 +32,7 @@ cat  "$testsList"|while read a ; do
         echo "test result exist: $test"
     else  
         mkdir -p $(dirname "$test")
-        curl -f -v $curlExtra "$repoUrl/$test" -o "$test" &
+        curl -f $curlExtra "$repoUrl/$test" -o "$test" &
     fi
   done
   wait
@@ -43,10 +43,10 @@ find "perftests" -name statistics.json > "$testsList"
 cat  "$testsList"|while read a ; do
   read b || :; read c || :; read d || :
   for test in $a $b $c $d ; do
-    curl -f -v -X PUT -T "$test" $curlExtra "$repoUrl/$test" &
+    curl -f -X PUT -T "$test" $curlExtra "$repoUrl/$test" &
   done
   wait
 done
 
-curl -f -s -S -X PUT -T "$testsList" $curlExtra "$repoUrl/$testsList"
+curl -f -v -s -S -X PUT -T "$testsList" $curlExtra "$repoUrl/$testsList"
 popd

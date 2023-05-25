@@ -22,7 +22,7 @@ mkdir "$testDir"
 
 echo "Run jmeter tests"
 "$jmeter" -n -t ./test-data/files-dyn/download-files-csv.jmx -l ./artipie-upload.log -e -o "$testDir" -Jrepository.host="$host" -Jrepository.port="$port" \
-  -Jrepository.path=chgen/bintest -Jduration="$duration" -Jsrc.path=tmp -Jsrc.list=test-data/files-dyn/files-list.csv
+  -Jrepository.path=bintest -Jduration="$duration" -Jsrc.path=tmp -Jsrc.list=test-data/files-dyn/files-list.csv
 resDir="files_dl_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"
 mv -f "$testDir" "$resDir"
 ln -s "$resDir" "$lastDir"

@@ -139,9 +139,9 @@ Useful JMeter metrics:
 ## Testing commands for curl
 
 ```
-curl -v -X PUT -d 'test data' http://localhost:8081/chgen/bintest/test.txt
-curl -v -X PUT -T ./jmeter.log http://localhost:8081/chgen/bintest/jmeter.log
-curl -v -H 'Accept: text/plain' http://localhost:8081/chgen/bintest/
+curl -v -X PUT -d 'test data' http://localhost:8081/bintest/test.txt
+curl -v -X PUT -T ./jmeter.log http://localhost:8081/bintest/jmeter.log
+curl -v -H 'Accept: text/plain' http://localhost:8081/bintest/
 curl -v -H 'Accept: text/plain' https://central.artipie.com/artipie/benchmarks/perftests_repo
 ```
 

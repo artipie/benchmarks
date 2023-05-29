@@ -4,7 +4,7 @@ if [ $# -lt 1 ]; then
 fi
 host="$1"
 apiPort="${2:-8086}"
-repo="${3:-chgen/bintest}"
+repo="${3:-bintest}"
 
 login=chgen
 pass=chgen

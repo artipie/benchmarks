@@ -6,6 +6,7 @@ Configurable maven test data generator. Usage:
 ./prep-maven-dyn.py --groups 3 --artifacts 4 --versions=5
 """
 
+from datetime import datetime
 import os
 import shutil
 import pathlib
@@ -59,22 +60,50 @@ def generateRepo(dstRepo: str, dstDir: str, srv: subprocess.Popen, cfg: RepoConf
     groupsLimits = {BIG: bigs, MED: mediums, SMALL: smalls}
 
     totalUploaded = 0
+    metadata = dict[str, list[str]]()
     for gr in range(1, cfg.groups + 1):
         for ar in range(1, cfg.artifacts + 1):
             for ver in range(1, cfg.versions + 1):
-                for x in groupsSizes.keys():
+                for                x in groupsSizes.keys():
                     if g_termination or srv.poll() != None:
                         return
                     if groupsUploaded[x] < groupsLimits[x]:
-                        generateArtifact_fast(dstDir, f"group{gr}", f"artifact{ar}-{x}", f"1.{ver}.0", groupsSizes[x])
-                        #generateArtifact_MVN(dstRepo, f"group{gr}", f"artifact{ar}-{x}", f"1.{ver}.0", groupsSizes[x])
+                        version = f"1.{ver}.0"
+                        generateArtifact_fast(dstDir, f"group{gr}", f"artifact{ar}-{x}", version, groupsSizes[x])
+                        #generateArtifact_MVN(dstRepo, f"group{gr}", f"artifact{ar}-{x}", version, groupsSizes[x])
                         groupsUploaded[x] += 1
                         totalUploaded += 1
+                        key = f"group{gr}/artifact{ar}-{x}"
+                        vers: list[str] = metadata.setdefault(key, list[str]())
+                        vers.append(version)
                         break #one new artifact per version 
                     else:
                         print(f"  limit for {x} with count: {groupsUploaded[x]}; {gr} {ar} {ver}; totalUploaded={totalUploaded}")
                 if totalUploaded >= cfg.totals:
                     return
+    lastUpdated = datetime.now().strftime('%Y%m%d%H%M%S')
+    for subpath, vers in metadata.items():
+        metaname = f"{dstDir}/{subpath}/maven-metadata.xml"
+        with open(metaname, "wt") as metaxml:
+            group, artifact = subpath.split("/")
+            lastVersion = vers[len(vers) - 1]
+            versionsData = '\n'.join([f"<version>{v}</version>" for v in vers])
+            print(
+f"""<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<metadata>
+    <groupId>{group}</groupId>
+    <artifactId>{artifact}</artifactId>
+    <versioning>
+        <latest>{lastVersion}</latest>
+        <release>{lastVersion}</release>
+        <versions>
+            {versionsData}
+        </versions>
+        <lastUpdated>{lastUpdated}</lastUpdated>
+    </versioning>
+</metadata>
+""", file=metaxml)
+        generateHashes(metaname)
 
 def generateArtifact_fast(dstDir, group, artifact, version, jarSize):
     print('Generation of artifact: ', group, artifact, version, dstDir, jarSize)

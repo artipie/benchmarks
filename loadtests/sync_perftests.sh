@@ -30,7 +30,7 @@ cat  "$testsList"|while read a ; do
   for test in $a $b $c $d ; do
     if [ -s "$test" ] ; then
         echo "test result exist: $test"
-    else  
+    else
         mkdir -p $(dirname "$test")
         curl -f $curlExtra "$repoUrl/$test" -o "$test" &
     fi

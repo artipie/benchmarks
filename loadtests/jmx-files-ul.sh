@@ -27,3 +27,4 @@ echo "Run jmeter tests"
 resDir="files_ul_${host}_${port}_${duration}_$(date +%y-%m-%d_%H-%M-%S)"
 mv -f "$testDir" "$resDir"
 ln -s "$resDir" "$lastDir"
+./checkstats.py "./$lastDir/statistics.json" 10

@@ -174,7 +174,7 @@ Every directory has the following structure:
 - https://central.artipie.com/artipie/benchmarks/perftests_repo/graphs_t/jmx-maven-ul.svg
 - https://central.artipie.com/artipie/benchmarks/perftests_repo/graphs_t/jmx-maven-dl.svg
 
-#### Graphs for test tags
+#### Graphs for all tags
 - https://central.artipie.com/artipie/benchmarks/perftests_repo/graphs/jmx-files-ul.svg
 - https://central.artipie.com/artipie/benchmarks/perftests_repo/graphs/jmx-files-dl.svg
 - https://central.artipie.com/artipie/benchmarks/perftests_repo/graphs/jmx-files-maven-ul.svg

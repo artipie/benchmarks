@@ -3,10 +3,6 @@ if [ $# -lt 1 ]; then
     echo "Usage: $0 URL [login password]" && exit 1
 fi
 
-# perftests_repo/perftests/<tag>/<testname>/statistics.json
-# perftests_repo/jfr/artipie.last.jfr.tar.xz
-# perftests_repo/graphs/<testname>.png
-
 cd `dirname "$0"`
 
 curlExtra=""
@@ -32,6 +28,7 @@ cat  "$testsList"|while read a ; do
         echo "test result exist: $test"
     else
         mkdir -p $(dirname "$test")
+        echo "URL: $repoUrl/$test"
         curl -f $curlExtra "$repoUrl/$test" -o "$test" &
     fi
   done

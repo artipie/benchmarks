@@ -81,6 +81,7 @@ Maven tests support testing with real artifacts data (`maven-real`) and generate
 - `jmx-files-ul.sh` download files by list, generated for upload script above
 - `maven-repo-reset.sh` reset & wipe data for maven repository via Artipie REST API, for tests
 - `bintest-repo-reset.sh` reset & wipe data for binary files repository via Artipie REST API, for tests
+- `sync_perftests.sh` script to download all remote + upload new local test results of JMeter tests
 - `monitoring/*` monitoring support for artipie, which consist of two parts, see `README.md` there.
  - `conan/` some basic scripts for future conan adapter support
 

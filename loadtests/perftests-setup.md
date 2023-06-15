@@ -46,13 +46,13 @@ Currently runners for Artipie performance testing must be started as root. Docke
 
 ```
 sudo -b nohup dockerd >/tmp/docker.log 2>&1
-cd wsl-client-runner
+cd wsl-artipie-client-runner
 sudo -b RUNNER_ALLOW_RUNASROOT=1 nohup ./run.sh
 ```
 
 ```
 sudo -b nohup dockerd >/tmp/docker.log 2>&1
-cd wsl-server-runner
+cd wsl-artipie-server-runner
 sudo -b RUNNER_ALLOW_RUNASROOT=1 nohup ./run.sh
 ```
 

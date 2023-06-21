@@ -165,3 +165,10 @@ https://central.artipie.com/artipie/benchmarks/perftests_repo/jfr/artipie.last.j
 ```
 time mvn clean install -Dhttp.proxyHost=localhost -Dhttp.proxyPort=8888 -Dhttps.proxyHost=localhost -Dhttps.proxyPort=8888 -Dmaven.wagon.http.ssl.insecure=true -Dmaven.test.skip -Ddockerfile.skip=true
 ```
+
+
+## Test delays
+
+Delays for testing purposes could be added to a target branch by cherry-picking the following commit: https://github.com/artipie/artipie/commits/ech-delayed-storage-patch
+It is rebased on the artipie master and passes artipie tests & qulice checks.
+

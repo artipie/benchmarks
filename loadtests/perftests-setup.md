@@ -85,6 +85,31 @@ UPLOAD_LOGIN=***
 UPLOAD_PASSWORD=***
 ```
 
+### Performace warnings emails
+
+Performance warnings currently sent from `artipiebox@gmail.com` using `ssmtp` utility.
+Note that to send messages via GMail email box it must be configured with Two-factors authentication. After that App passwords must be configured too. See:
+```
+https://myaccount.google.com/signinoptions/two-step-verification/enroll-welcome
+https://security.google.com/settings/security/apppasswords
+```
+
+System configuration:
+```
+sudo apt install -y ssmtp
+
+sudo nano /etc/ssmtp/ssmtp.conf
+
+root=artipiebox@gmail.com
+mailhub=smtp.gmail.com:465
+FromLineOverride=YES
+AuthUser=artipiebox@gmail.com
+AuthPass=*****
+UseTLS=YES
+
+
+echo "Testing ssmtp..." | ssmtp artipiebox@gmail.com
+```
 
 ### Usage notes
 ```
